@@ -1,0 +1,18 @@
+docker search oracle-12c -> 이미지검색
+
+docker pull truevoly/oracle-12c -> 이미지가져오기
+
+docker images -> 가져온 이미지 확인
+
+docker run --name oracle12c -d -p 32765:8080 -p 32764:1521 truevoly/oracle-12c -> 실행중인 컨테이너 확인
+
+docker ps -a -> 여기서 container_id 확인
+
+
+
+docker logs c524f313da08(ps -a 해서 나온 ID
+
+
+create user admin IDENTIFIED by 1234;
+grant connect, resource, dba to admin;
+  ->admin/ 1234 인 계정이 생성되게된다
