@@ -60,6 +60,7 @@ def ex01():
 #정보를 숨겨서 보낼땐 POST, 숨기지 않아도되면 GET으로 가능
 @app.route("/ex01_1", methods=['GET'])
 def ex01_1():
+    #request.args.get으로 GET 방식에서는 데이터를 읽어와준다
     n1 = int(request.args.get('n1',0))
     n2 = int(request.args.get('n2',0))
     n3 = int(request.args.get('n3',0))

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>회원목록</title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="static/css/mystyle.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <a href="index" class="btn btn-info">홈으로</a>
+
+        <table class="table">
+            <tr>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>나이</th>
+                <th>번호</th>
+                <th>e-mail</th>
+                <th>DATE</th>
+            </tr>
+            {% for tmp in key %}
+            <tr>
+                <td>{{tmp[0]}}</td>
+                <td>{{tmp[1]}}</td>
+                <td>{{tmp[2]}}</td>
+                <td>{{tmp[3]}}</td>
+                <td>{{tmp[4]}}</td>
+                <td>{{tmp[5]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
