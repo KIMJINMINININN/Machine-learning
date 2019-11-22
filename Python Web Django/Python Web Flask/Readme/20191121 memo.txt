@@ -1,0 +1,15 @@
+-flask 사용하는 과정-
+#1.flask 사용해보기
+#2.static, templates를 만들어준다
+-> static .js .css같은 정적 파일을 모아두는 폴더
+-> templates는 뷰파일을 모아두는 폴더(.html)
+#3.render_template를 사용
+-> render_template를 사용하여서 어떠한 파일을 직접 불러와준다
+-> 이것을 사용하여 다른 폴더에서 불러와주어야할 페이지들을 불러오게만든다
+#4.html과 css를 사용할때에는 가장 기본 templates인 bootstrap을 사용한다
+#5.
+#6.
+#7.
+#8.
+#9.
+#10.
