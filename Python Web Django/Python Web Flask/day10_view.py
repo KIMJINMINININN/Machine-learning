@@ -1,23 +1,52 @@
 #flask 사용
-from flask import Flask, render_template, redirect, request 
+from datetime import timedelta
+from flask import Flask, render_template, redirect, request, session
 import day10_model as md
+#**
 app = Flask(__name__)
-member = md.memberModel()
-member1 = md.boardModel()
+app.secret_key = b'fefe#$$%4_F#f3f33fA'
+#**
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=5)
 
+member = md.memberModel()
+board = md.boardModel()
+#member1 대신에 board를 넣어줬다
+
+## 게시판 내용 - GET
+## http://127.0.0.1:5000/boardc?no=5
+## http://127.0.0.1:5000/boardc
+
+
+#**
 @app.route("/login", methods=['GET'])
 def login_get():
     return render_template('login.html')
 
 @app.route("/login", methods=['POST'])
 def login_post():
-    data = member.getlogin()
-    id = request.form['id']
-    pw = request.form['pw']
-    # for a in data:
-    return render_template('index.html')
-# @app.route("/logintest", methods=['POST'])
-# def logintest():
+    a = request.form['id']  
+    b = request.form['pw']
+
+    a1 = [a, b] # 아이디와 암호 값을 a1리스트에 추가
+    mone = member.login(a1)
+    # print(mone)
+    if not mone :
+        print("로그인 실패")
+    else:
+        print("로그인 성공")  
+        session['userid'] = mone[0]  # 자료형 딕셔너리 {"userid":"a"}
+        session['username'] = mone[1] #{"userid":"a", "username":"이름"}
+
+    return redirect("index")
+
+@app.route('/logout', methods=['GET'])
+def logout():
+   session.pop('userid', None)
+   session.pop('username', None)
+   return redirect('index')     
 
 @app.route("/join", methods=['GET'])
 def join():
@@ -68,14 +97,26 @@ def boardw_post():
     c = request.form['wr']
     #day10_model1.py파일에 boardModel 클래스 생성후 write메소드 호출
     a1 = [a,b,c]
-    member1.write(a1)
+    board.write(a1)
     return redirect('index')
 
-@app.route("/boardlist", methods=['GET'])
+@app.route("/board", methods=['GET'])#board라고 보면되겠다
 def board_get():
-    data = member1.boardlist()
-    print(data)
-    return render_template('boardlist.html', key=data)
+    data = board.boardlist()
+    session['boardhit'] = 1
+    return render_template('board.html', key=data)
+
+@app.route("/boardc", methods=['GET'])
+def boardc_get():
+    no = [ request.args.get('no', 0) ] # 리스트로 만듬 => [7]
+
+    if 'boardhit' in session:
+        if session['boardhit'] == 1:
+            board.boardhit(no) #조회수 1증가시키기
+            session['boardhit'] = 0
+
+    one = board.boardone(no)
+    return render_template('boardc.html', key=one)
 
 if __name__ == '__main__':
     app.run(debug=True)
