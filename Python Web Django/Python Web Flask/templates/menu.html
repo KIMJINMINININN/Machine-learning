@@ -6,8 +6,11 @@
         {% else %}
             {{session['username']}} 님 환영합니다.
             <a class="p-2 text-dark" href="logout">로그아웃</a>
+            <a class="p-2 text-dark" href="delete">회원탈퇴</a>
+            <a class="p-2 text-dark" href="mypage">정보수정</a>
         {% endif %}
         <a class="p-2 text-dark" href="join">회원가입</a>
+
         <a class="p-2 text-dark" href="memberlist">회원목록</a>
         <a class="p-2 text-dark" href="board">게시판</a>
     </nav>

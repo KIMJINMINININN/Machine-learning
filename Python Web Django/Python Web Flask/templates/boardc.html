@@ -23,7 +23,7 @@
             <div class="form-inline" style="margin-top:5px">    
                 <label style="width:90px">내용</label>
                 {% autoescape false %}
-                <label>{{ key[2] }}</label>
+                <label>{{ key[2] | replace("\n","<br/>")}}</label>
                 {% endautoescape %}
             </div>    
             <div class="form-inline" style="margin-top:5px">
@@ -44,10 +44,15 @@
             <div class="form-inline" style="margin-top:5px">
                 <label style="width:90px"></label>
                 <a href="board" class="btn btn-success">글목록으로</a>&nbsp;
-                <a href="#" class="btn btn-success">수정</a>&nbsp;
-                <a href="#" class="btn btn-success">삭제</a>&nbsp;
-                <a href="boardc?no={{key[0]-1}}" class="btn btn-success">이전글</a>&nbsp;
-                <a href="boardc?no={{key[0]+1}}" class="btn btn-success">다음글</a>&nbsp;
+                <a href="boarde?no={{ key[0] }}" class="btn btn-success">수정</a>&nbsp;
+                <a href="boardd?no={{ key[0] }}" class="btn btn-success">삭제</a>&nbsp;
+                {% if prev[0] != 0 %}
+                <a href="boardc?no={{prev[0]}}" class="btn btn-success">이전글</a>&nbsp;
+                {% endif %}
+
+                {% if next[0] != 0 %}
+                <a href="boardc?no={{next[0]}}" class="btn btn-success">다음글</a>&nbsp;
+                {% endif %}
             </div>
         </div>
         </form>            

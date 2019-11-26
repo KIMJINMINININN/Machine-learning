@@ -7,8 +7,21 @@
     <link href="static/css/mystyle.css" rel="stylesheet" />
 </head>
 <body>
+    {% include 'menu.html' %}
     <div class="container">
-        <a href="index" class="btn btn-info">홈으로</a>
+        <a href="index" class="btn btn-info">홈으로</a> / <a href="boardw" class="btn btn-info">글쓰기</a><br />
+
+        <form action="board" method="get">
+                <div class="form-inline row justify-content-end" style="margin-top:5px; margin-bottom:5px">
+                    <select name="type" class="form-control">
+                        <option value="brd_title">제목</option>
+                        <option value="brd_content">내용</option>
+                        <option value="brd_writer">작성자</option>
+                    </select>&nbsp;
+                    <input type="text" name="text" class="form-control" placeholder="검색어" />&nbsp;
+                    <input type="submit" class="btn btn-success" value="검색" />
+                </div>
+            </form>
 
         <table class="table">
             <tr>
@@ -28,6 +41,18 @@
             </tr>
             {% endfor %}
         </table>
+
+        <div class="row justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>게시판글쓰기</title>
+    <title>게시판수정</title>
     <link href="static/css/bootstrap.min.css" rel="stylesheet" />
     <link href="static/css/mystyle.css" rel="stylesheet" />
 </head>
@@ -12,15 +12,16 @@
         <div class="box">   
             <div class="form-inline">
                 <label style="width:90px">제목</label>
-                <input type="text" name="ti" class="form-control" placeholder="제목"/>
+                <input type="hidden" name="no" value="{{key[0]}}" />
+                <input type="text" name="ti" class="form-control" value="{{key[1]}}"/>
             </div>
             <div class="form-inline" style="margin-top:tpx">
                 <label style="width:90px">내용</label>
-                <textarea rows="6" name="co" class="form-control" placeholder="내용"></textarea>
+                <textarea rows="6" name="co" class="form-control">{{key[2]}}</textarea>
             </div>
             <div class="form-inline" style="margin-top:5px">
                 <label style="width:90px">작성자</label>
-                <input type="text" name="wr" class="form-control" placeholder="작성자"/>
+                <input type="text" name="wr" class="form-control" value="{{key[3]}}" readonly/>
             </div>
             <div class="form-inline" style="margin-top:5px">
                 <label style="width:90px"></label>

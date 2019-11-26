@@ -19,8 +19,13 @@ board = md.boardModel()
 ## http://127.0.0.1:5000/boardc?no=5
 ## http://127.0.0.1:5000/boardc
 
-
 #**
+
+
+@app.route("/index")
+def index():
+    return render_template('index.html')
+
 @app.route("/login", methods=['GET'])
 def login_get():
     return render_template('login.html')
@@ -39,7 +44,6 @@ def login_post():
         print("로그인 성공")  
         session['userid'] = mone[0]  # 자료형 딕셔너리 {"userid":"a"}
         session['username'] = mone[1] #{"userid":"a", "username":"이름"}
-
     return redirect("index")
 
 @app.route('/logout', methods=['GET'])
@@ -47,6 +51,20 @@ def logout():
    session.pop('userid', None)
    session.pop('username', None)
    return redirect('index')     
+
+@app.route("/delete", methods=['GET'])
+def member_delete():
+    return render_template('memberout.html')
+
+@app.route("/delete", methods=['POST'])
+def member1_delete():
+    id = session['userid'] 
+    pw = request.form['pw']
+    pw1 = request.form['pwtest']
+    if pw == pw1:   
+        send1 = [id, pw]
+        member.delete(send1)
+    return redirect('logout')
 
 @app.route("/join", methods=['GET'])
 def join():
@@ -76,10 +94,6 @@ def join_post():
 def join_ok():
     return render_template('join_ok.html')
 
-@app.route("/index")
-def index():
-    return render_template('index.html')
-
 @app.route("/memberlist", methods=['GET'])
 def memberlist():
     data = member.memberlist()
@@ -102,7 +116,8 @@ def boardw_post():
 
 @app.route("/board", methods=['GET'])#board라고 보면되겠다
 def board_get():
-    data = board.boardlist()
+    no = [ request.args.get('type', 'brd_title'), request.args.get('text', '') ]
+    data = board.boardlist(no)
     session['boardhit'] = 1
     return render_template('board.html', key=data)
 
@@ -115,8 +130,35 @@ def boardc_get():
             board.boardhit(no) #조회수 1증가시키기
             session['boardhit'] = 0
 
+    one = board.boardone(no)   # 상세내용 (1,2,3,4,..)
+    prev = board.boardprev(no) # 이전글 (1) prev[0]
+    next = board.boardnext(no) # 다음글 (5) next[0]
+    return render_template('boardc.html', key=one, prev=prev, next=next)
+
+@app.route("/boardd", methods=['GET'])
+def boarddelete_get():
+    no = [ request.args.get('no', 0) ]
+    board.boarddelete(no)
+    return redirect('board') #127.0.0.1:5000/board
+    #render_template('board.html', key=data)
+
+@app.route("/boarde", methods=['GET'])#board라고 보면되겠다
+def boarde_get():
+    no = [ request.args.get('no', 0) ] # 리스트로 만듬 => [7]
     one = board.boardone(no)
-    return render_template('boardc.html', key=one)
+    render_template('boarde.html', key=one)
+    return render_template('boarde.html', key=one)
+
+@app.route("/boarde", methods=['POST'])#board라고 보면되겠다
+def boarde_post():
+    a = request.form['no']
+    b = request.form['ti']
+    c = request.form['co']
+    a1 = [a,b,c]
+    board.boardupdate(a1)
+    return redirect("boardc?no=" + str(a))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
