@@ -26,7 +26,6 @@ class memberModel:
         sql = "SELECT * FROM MEMBER WHERE MEM_ID=:1 AND MEM_PW=:2"
         self.cursor.execute(sql, data)
         mone = self.cursor.fetchone() #결과값 받기 :  튜플 (  )
-        print(mone)
         if mone :
             sql = "DELETE FROM MEMBER WHERE MEM_ID=:id"
             self.cursor.execute(sql, id=data[0])

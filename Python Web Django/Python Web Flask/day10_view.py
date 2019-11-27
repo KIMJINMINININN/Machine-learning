@@ -21,7 +21,6 @@ board = md.boardModel()
 
 #**
 
-
 @app.route("/index")
 def index():
     return render_template('index.html')
@@ -58,12 +57,17 @@ def member_delete():
 
 @app.route("/delete", methods=['POST'])
 def member1_delete():
-    id = session['userid'] 
+    id = session['userid']
     pw = request.form['pw']
     pw1 = request.form['pwtest']
     if pw == pw1:   
         send1 = [id, pw]
-        member.delete(send1)
+        num = member.delete(send1)
+        if num == true:
+            prin
+
+
+             
     return redirect('logout')
 
 @app.route("/join", methods=['GET'])
