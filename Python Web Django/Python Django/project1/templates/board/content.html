@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <title>Content</title>
+</head>
+<body>
+    {% include '../menu.html' %}
+
+    <a href="/board/edit?no={{one.0}}">수정</a>
+
+    <form action="/board/delete" method="post">
+        <input type="hidden" value="{{request.GET.no}}" name="no" />
+        <input type="submit" value="삭제" />
+    </form>
+    {{one.0}}
+    {{one.1}}
+    {{one.2}}
+    {{one.3}}
+    {{one.4}}
+    {{one.5}}
+</body>
+</html>

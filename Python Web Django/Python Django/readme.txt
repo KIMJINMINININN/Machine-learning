@@ -33,3 +33,18 @@ DATABASES = {
         'PORT' : '32764'
     }
 }
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+-> 6가지가있어야한다
+
+$ python manage.py check
+$ python manage.py makemigrations
+$ python manage.py migrate <= DB에 반영
+->하게된다면 DB에 Django와 Auth에 관련된 테이블이 나타게된다

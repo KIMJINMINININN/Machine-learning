@@ -1,14 +1,18 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-normal">Company name</h5>
     <nav class="my-2 my-md-0 mr-md-3">
-
-        <a class="p-2 text-dark" href="login">로그인</a>
+        
+        {% if request.session.userid %}
+        {{ request.session.userid }}님 환영합니다
         <a class="p-2 text-dark" href="logout">로그아웃</a>
         <a class="p-2 text-dark" href="delete">회원탈퇴</a>
-        <a class="p-2 text-dark" href="mypage">정보수정</a>
+        {% else %}
+        <a class="p-2 text-dark" href="login">로그인</a>
+        {% endif %}
+        <a class="p-2 text-dark" href="edit">정보수정</a>
         <a class="p-2 text-dark" href="join">회원가입</a>
-        <a class="p-2 text-dark" href="memberlist">회원목록</a>
-        <a class="p-2 text-dark" href="board">게시판</a>
+        <a class="p-2 text-dark" href="list">회원목록</a>
+        <a class="p-2 text-dark" href="/board/list">게시판</a>
     </nav>
     <a class="btn btn-outline-primary" href="#">Sign up</a>
 </div>

@@ -12,6 +12,7 @@ def index(request):
 def login(request):
     if request.method == "GET":
         return render(request,'member/login.html')
+
     elif request.method == "POST":
         cursor = connection.cursor()
         a = request.POST['id']  
@@ -21,13 +22,12 @@ def login(request):
         sql = "SELECT * FROM MEMBER WHERE MEM_ID=%s AND MEM_PW=%s"
         cursor.execute(sql, a1)
         mone = cursor.fetchone()
-        print(mone)
-        # if not mone :
-        #     print("로그인 실패")
-        # else:
-        #     print("로그인 성공")  
-        #     session['userid'] = mone[0]  # 자료형 딕셔너리 {"userid":"a"}
-        #     session['username'] = mone[1] #{"userid":"a", "username":"이름"}
+        if not mone :
+             print("로그인 실패")
+        else:
+             print("로그인 성공")  
+             request.session['userid'] = a  # 자료형 딕셔너리 {"userid":"a"}
+            #  request.session['username'] = b #{"userid":"a", "username":"이름"}
         return redirect('/member/index')
 
 @csrf_exempt
@@ -49,4 +49,54 @@ def join(request):
         sql = "INSERT INTO MEMBER(MEM_ID, MEM_PW, MEM_NAME, MEM_TEL, MEM_EMAIL, MEM_DATE) VALUES(%s,%s,%s,%s,%s,SYSDATE)"
         cursor.execute(sql, a1)
         # cursor.commit()
-        return redirect("/member/join")
+
+        return redirect("/member/index")
+
+@csrf_exempt
+def list(request):
+    cursor = connection.cursor()
+    sql = "SELECT * FROM MEMBER"
+    cursor.execute(sql)
+    key = cursor.fetchall()
+    print(key)
+    return render(request,'member/list.html', {"key":key})
+
+def logout(request):
+    del request.session['userid']  # 세션에 지우기
+    return redirect("index")
+
+@csrf_exempt
+def delete(request):
+    if request.method == "GET":
+        return render(request,'member/delete.html')
+    elif request.method == "POST":
+        cursor = connection.cursor()
+        id = request.session['userid']
+        print(id)
+        pw = request.POST['pw']
+        pw1 = request.POST['pwtest']
+        if pw == pw1:   
+            sql = "DELETE FROM MEMBER WHERE MEM_ID=%s"
+            cursor.execute(sql,[id])
+        return redirect("list")
+
+@csrf_exempt
+def edit(request):
+    if request.method == "GET":
+        if not request.session['userid'] :
+            cursor = connection.cursor()
+            id = request.session['userid']
+            sql = "SELECT * FROM MEMBER WHERE MEM_ID=%s"
+            cursor.execute(sql, [id])
+            key = cursor.fetchall()
+            print(key)
+            return render(request,'member/edit.html',{"key":key})
+    elif request.method == "POST":
+        pw = request.POST['pw']
+        pw1 = request.POST['pw1']
+        name = request.POST['name']
+        pw = request.POST['phone']
+        pw = request.POST['pw']
+        pw = request.POST['pw']
+        pw = request.POST['mail']
+        return redirect("list")

@@ -63,11 +63,6 @@ def member1_delete():
     if pw == pw1:   
         send1 = [id, pw]
         num = member.delete(send1)
-        if num == true:
-            prin
-
-
-             
     return redirect('logout')
 
 @app.route("/join", methods=['GET'])
@@ -150,7 +145,6 @@ def boarddelete_get():
 def boarde_get():
     no = [ request.args.get('no', 0) ] # 리스트로 만듬 => [7]
     one = board.boardone(no)
-    render_template('boarde.html', key=one)
     return render_template('boarde.html', key=one)
 
 @app.route("/boarde", methods=['POST'])#board라고 보면되겠다

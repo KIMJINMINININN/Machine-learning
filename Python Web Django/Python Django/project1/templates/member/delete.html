@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <title>회원탈퇴</title>
+</head>
+<body>
+    <div class="container">
+        <form action="delete" method="post">
+            <div class="box">
+                <h3>회원탈퇴</h3>
+                <label style="width: 90px">비밀번호</label>
+                <input type="password" name="pw" /><br />
+
+                <label style="width: 90px">비밀번호확인</label>
+                <input type="password" name="pwtest" /><br />
+                <hr />
+                <input type="submit" class="btn btn-danger" value="확인"/>
+                <a href="index" class="btn btn-info">취소</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
