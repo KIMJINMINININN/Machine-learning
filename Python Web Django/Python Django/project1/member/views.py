@@ -83,20 +83,29 @@ def delete(request):
 @csrf_exempt
 def edit(request):
     if request.method == "GET":
-        if not request.session['userid'] :
+        if request.session['userid'] :
             cursor = connection.cursor()
             id = request.session['userid']
             sql = "SELECT * FROM MEMBER WHERE MEM_ID=%s"
             cursor.execute(sql, [id])
-            key = cursor.fetchall()
+            key = cursor.fetchone()
             print(key)
             return render(request,'member/edit.html',{"key":key})
     elif request.method == "POST":
+        cursor = connection.cursor()
+        id = request.POST['id']
         pw = request.POST['pw']
-        pw1 = request.POST['pw1']
+        # pw1 = request.POST['pw1']
         name = request.POST['name']
-        pw = request.POST['phone']
-        pw = request.POST['pw']
-        pw = request.POST['pw']
-        pw = request.POST['mail']
+        phone1 = request.POST['phone1']
+        phone2 = request.POST['phone2']
+        phone3 = request.POST['phone3']
+        email1 = request.POST['email1']
+        email2 = request.POST['email2']
+        a1 = [pw,name,(phone1 + "-" + phone2 + "-" + phone3), (email1+"@"+email2),id]
+        sql = "UPDATE MEMBER SET MEM_PW=%s,MEM_NAME=%s,MEM_TEL=%s,MEM_EMAIL=%s WHERE MEM_ID=%s"
+        cursor.execute(sql, a1)
+        # key = cursor.fetchone()
+        # pw = request.POST['mail']
+
         return redirect("list")
