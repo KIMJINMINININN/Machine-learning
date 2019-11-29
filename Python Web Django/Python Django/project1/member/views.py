@@ -17,7 +17,6 @@ def login(request):
         cursor = connection.cursor()
         a = request.POST['id']  
         b = request.POST['pw']
-
         a1 = [a, b] # 아이디와 암호 값을 a1리스트에 추가
         sql = "SELECT * FROM MEMBER WHERE MEM_ID=%s AND MEM_PW=%s"
         cursor.execute(sql, a1)
@@ -27,8 +26,9 @@ def login(request):
         else:
              print("로그인 성공")  
              request.session['userid'] = a  # 자료형 딕셔너리 {"userid":"a"}
+             return redirect('/board/index')
             #  request.session['username'] = b #{"userid":"a", "username":"이름"}
-        return redirect('/member/index')
+        return redirect('/member/login')
 
 @csrf_exempt
 def join(request):
@@ -49,7 +49,6 @@ def join(request):
         sql = "INSERT INTO MEMBER(MEM_ID, MEM_PW, MEM_NAME, MEM_TEL, MEM_EMAIL, MEM_DATE) VALUES(%s,%s,%s,%s,%s,SYSDATE)"
         cursor.execute(sql, a1)
         # cursor.commit()
-
         return redirect("/member/index")
 
 @csrf_exempt
@@ -62,8 +61,9 @@ def list(request):
     return render(request,'member/list.html', {"key":key})
 
 def logout(request):
-    del request.session['userid']  # 세션에 지우기
-    return redirect("index")
+    if request.method == "GET" or request.method == "POST" : 
+        del request.session['userid']  # 세션을 지우기
+        return redirect("index")
 
 @csrf_exempt
 def delete(request):
@@ -105,7 +105,4 @@ def edit(request):
         a1 = [pw,name,(phone1 + "-" + phone2 + "-" + phone3), (email1+"@"+email2),id]
         sql = "UPDATE MEMBER SET MEM_PW=%s,MEM_NAME=%s,MEM_TEL=%s,MEM_EMAIL=%s WHERE MEM_ID=%s"
         cursor.execute(sql, a1)
-        # key = cursor.fetchone()
-        # pw = request.POST['mail']
-
         return redirect("list")
