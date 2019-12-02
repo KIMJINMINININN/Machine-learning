@@ -7,5 +7,9 @@ urlpatterns = [
     path('insert', views.insert, name='insert'),
     path('update', views.update, name='update'),
     path('delete', views.delete, name='delete'),
-    path('select', views.select, name='select')
+    path('select', views.select, name='select'),
+    path('graph', views.graph, name='graph'),
+    path('dataframe', views.dataframe, name='dataframe'),
+    path('select1', views.select1, name='select1'),
+    path('dataframe_item', views.dataframe_item, name='dataframe_item'),
 ]

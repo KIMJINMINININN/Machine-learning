@@ -10,6 +10,12 @@ class Item(models.Model):
     itm_qty = models.IntegerField()
     itm_date = models.DateField(auto_now_add=True)
 
-    def __str__(self):
-        return str(self.itm_no)
+class Student(models.Model) :
+    objects = models.Manager()
+    id      = models.CharField(max_length=30, primary_key=True)
+    age     = models.IntegerField()
+    name    = models.CharField(max_length=30)
 
+    
+def __str__(self):
+    return str(self.itm_no)

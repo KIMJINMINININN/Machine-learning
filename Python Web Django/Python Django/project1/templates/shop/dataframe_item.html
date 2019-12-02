@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    dataframe_Item
+    <a href="/shop/dataframe_item?order=1" class = "btn btn-success">오름차순기준</a>
+    <a href="/shop/dataframe_item?order=2" class = "btn btn-success">내림차순기준</a>
+    <hr />
+    {{ key | safe}}
+    <hr />
+    <hr />
+    반복문 사용: <br />
+    {% for a in data %}
+        {{a.itm_no}} {{a.itm_name}} {{a.itm_content}} {{a.price}} {{a.qty}} {{a.date}}<br />
+    {% endfor %}
+    
+</body>
+</html>
