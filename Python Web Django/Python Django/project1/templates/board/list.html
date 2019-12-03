@@ -31,10 +31,12 @@
                         </tr>
                         {% for one in data %}
                         <tr>
-                            <th>{{one.0}}</th>
-                            <th><a href="/board/content?no={{one.0}}">{{one.1}}</a></th>
-                            <th>{{one.3}}</th>
-                            <th>{{one.4}}</th>
+                            <th>{{one.br_no}}</th>
+                            <th><a href="/board/content?no={{one.br_no}}">{{one.br_title}}</a></th>
+                            <th>{{one.br_content}}</th>
+                            <th>{{one.br_writer}}</th>
+                            <th>{{one.br_hit}}</th>
+                            <th>{{one.br_date}}</th>
                             <th>{{one.5 | date:"Y-m-d"}}</th>
                         </tr>
                         {% endfor %}

@@ -100,3 +100,28 @@ fb.save()
 fb = Feedback.objects.get(pk=2)
 fb.delete()
 -> 마찬가지로 객체 불러와서 자장시키고, 그 객체를 delete해주어서 삭제해주기
+---------------------------------------------------------------
+20191203
+placeholder :  
+<input type="text" placeholder="내용을 입력하세요.">
+-> HTML5의 placeholder 속성은 input 요소와 textarea 요소에 알맞은 힌트를 제공하는 목적으로 사용됩니다.
+
+bulk_create :
+-> SQL 에서 사용하는 BULK_INSERT 의 기능을 실행시켜주는 장고의 orm이다. 
+BULK_INSERT에 대해서 간략하게 설명하자면, 대용량 데이터를 로드하는 것이다.
+
+request.POST.getlist("id[]"):
+-> request POST 방법에서 id의 리스트값을 불러오는 방법에서
+
+{% for i in "x"|rjust:"10" %}
+-> for i in range(10)랑 같은것
+{{ forloop.counter }}
+-> i대신 받아줄수있는 변수
+
+<input type="text" name="a[]" value="{{ one.id }}" readonly />
+-> name="a[]"하고하면 a안에 list로 값이 계속해서 저장되게된다
+
+Student.objects.filter(id__in=chk).delete()
+-> id__in=chk는
+-> SQL문의 DELETE FROM SHOP_STUDENT WHERE IN(chk)와 같다
+

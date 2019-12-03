@@ -155,4 +155,67 @@ def dataframe_item(request):
     # return render(request, 'shop/dataframe_item.html',{"data":data})
     return render(request, 'shop/dataframe_item.html',{"key":df.to_html(classes='table'), "data":data})
 
+@csrf_exempt
+def insert_multi(request) :
+    if request.method == "GET" :
+        return render(request, 'shop/insert_multi.html')        
+    elif request.method == "POST" :
+        id1 = request.POST.getlist("id[]") # 중복된 name값 
+        na1 = request.POST.getlist("na[]")
+        ag1 = request.POST.getlist("ag[]")
 
+        objs = []
+        for i in range(0, len(id1), 1) : 
+            print(id1[i], na1[i], ag1[i])
+            obj = Student(id=id1[i], name=na1[i], age=ag1[i])
+            objs.append(obj)
+            #obj.save() #권장 방법이 아님.
+
+        Student.objects.bulk_create(objs) # batch commit
+        return redirect("/shop/insert_multi")
+
+@csrf_exempt
+def update_multi(request) :
+    if request.method == "GET" :
+        # [ (한줄),(한줄),(한줄) ]
+        rows = Student.objects.all().order_by('id')[:10] #10개만
+        print(type(rows[0]))  #첫번째 것 꺼내서 type확인
+        # ['a','b',34]    => one.0  one.1  one.2
+        # ('a','b',45)    => one.0  one.1  one.2
+        # {"id":"a", "name":"b", "age":34} => one.id
+        # Student object타입 => one.id one.name
+        return render(request, 'shop/update_multi.html',{"abc":rows})        
+
+    elif request.method == "POST" :
+        id = request.POST.getlist("a[]")
+        na = request.POST.getlist("b[]")
+        ag = request.POST.getlist("c[]")
+
+        objs = []
+        for i in range(0, len(id), 1):
+            obj = Student.objects.get(id = id[i])
+            obj.name = na[i]
+            obj.age = ag[i]
+            #obj.save()  #권장 방법이 아님.
+            objs.append(obj)
+
+        Student.objects.bulk_update(objs, ["name","age"])
+
+        return redirect("/shop/update_multi")  
+
+@csrf_exempt
+def delete_multi(request) :
+    if request.method == "GET" :
+        rows = Student.objects.all()
+        print(type(rows[0])) #one.id, one.name
+
+        rows1 = Student.objects.raw("SELECT * FROM SHOP_STUDENT")
+        print(type(rows1[0]))
+        return render(request, 'shop/delete_multi.html', {"abc":rows1})
+
+    elif request.method == "POST" :
+        chk = request.POST.getlist("chk[]")
+        print(chk)
+        Student.objects.filter(id__in=chk).delete()
+        return redirect("/shop/delete_multi")
+        

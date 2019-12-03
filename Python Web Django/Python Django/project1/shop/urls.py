@@ -12,4 +12,7 @@ urlpatterns = [
     path('dataframe', views.dataframe, name='dataframe'),
     path('select1', views.select1, name='select1'),
     path('dataframe_item', views.dataframe_item, name='dataframe_item'),
+    path('insert_multi', views.insert_multi, name='insert_multi'),
+    path('update_multi', views.update_multi, name='update_multi'),
+    path('delete_multi', views.delete_multi, name='delete_multi'),
 ]

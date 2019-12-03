@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/shop/delete_multi" method="post">
+        {% for one in abc %}
+        <input type="checkbox" name="chk[]" value="{{one.id}}"/>
+        <input type="text" value="{{ one.id }}" readonly />
+        <input type="text" value="{{ one.name }}" readonly/>
+        <input type="text" value="{{ one.age }}" readonly/><br />
+        {% endfor %}
+        <input type="submit" value="선택삭제"/>
+    </form>
+</body>
+</html>
