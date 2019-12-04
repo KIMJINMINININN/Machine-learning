@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>auth_update</title>
+</head>
+<body>
+    <form action="/blog/auth_pw" method="post">
+      현재암호:   <input type="password" name="passwd" id="pw1" />
+      바꿀암호1:  <input type="password" name="passwdch1" id="pw2" />
+      바꿀암호2:  <input type="password" name="passwdch2" id="pw3" />
+    <input type="submit" value="암호변경" id="btn" />
+    </form>
+
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function(){
+            $('#btn').click(function(){
+                var a = $('#pw1').val();
+                var b = $('#pw2').val();
+                var c = $('#pw3').val();
+                if(a.length <= 0){
+                    alert('현재암호입력하세요 제발ㅋㅋㅋㅋㅋㅋ')
+                    $('#pw1').focus()
+                    return false;
+                }
+                if(b.length <= 0){
+                    alert('현재암호입력하세요 제발ㅋㅋㅋㅋㅋㅋ')
+                    $('#pw2').focus()
+                    return false;
+                }
+                if(c.length <= 0){
+                    alert('현재암호입력하세요 제발ㅋㅋㅋㅋㅋㅋ')
+                    $('#pw3').focus()
+                    return false;
+                }
+
+                if (b != c){
+                    alert('바꿀암호틀림')
+                    $('pw2').focus();
+                    return false;
+                }
+            });
+            //alert('jquery ok')
+        });
+    </script>
+</body>
+</html>

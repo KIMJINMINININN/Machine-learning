@@ -16,6 +16,9 @@ def index(request):
     # return render(request,'board/index.html', {'data': row})
     return render(request,'board/index.html')
 
+def home(request):
+    return render(request,'board/home.html')
+
 def list(request):
     '''
     cursor = connection.cursor()

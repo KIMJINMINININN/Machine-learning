@@ -8,5 +8,6 @@ urlpatterns = [
     path('write', views.write, name='write'),
     path('edit', views.edit, name='edit'),
     path('content', views.content, name='content'),
-    path('delete', views.delete, name='delete')
+    path('delete', views.delete, name='delete'),
+    path('home', views.home, name='home')
 ]

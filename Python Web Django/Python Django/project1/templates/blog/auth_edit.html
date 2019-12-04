@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>auth_update</title>
+</head>
+<body>
+    <form action="/blog/auth_edit" method="post">
+        <input type="text" name="username" value="{{user.username}}" readonly/>
+        <textarea type="text" id = "summernote" name="first_name" >{{user.first_name}}</textarea>
+        <input type="text" name="email" value="{{user.email}}"/>
+        <input type="submit" value="수정"/>
+     <!-- include libraries(jQuery, bootstrap) -->
+     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+     <!-- include summernote css/js -->
+     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+     <script type="text/javascript"> 
+     $(function(){
+         $('#summernote').summernote({
+             height: 300
+         });
+     });
+     </script>
+ </form>
+</body>
+</html>

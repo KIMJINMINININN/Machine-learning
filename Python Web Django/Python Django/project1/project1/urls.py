@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('board/', include('board.urls')), #url지정
     path('member/', include('member.urls')),
-    path('shop/', include('shop.urls'))
+    path('shop/', include('shop.urls')),
+    path('blog/', include('blog.urls'))
 ]

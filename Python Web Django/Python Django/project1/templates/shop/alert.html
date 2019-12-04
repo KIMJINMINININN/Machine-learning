@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script type="text/javascript"> 
+       $(function(){
+            if ('{{chk}}' == '1') {  //
+                Swal.fire({
+                    text: '{{msg}}',
+                    icon: 'info',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '확인'
+                }).then((result) => {
+                    window.location.href = '{{url}}'
+                })
+            }
+            if ('{{chk}}' == '2') {   
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            }).then((result) => {
+                window.location.href = '{{url}}'
+            })
+            }
+            if ('{{chk}}' == '3') { 
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            }).then((result) => {
+                window.location.href = '{{url}}'
+            })
+            }
+        })
+    </script>
+</body>
+</html>

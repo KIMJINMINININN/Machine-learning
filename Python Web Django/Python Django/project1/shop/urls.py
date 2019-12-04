@@ -15,4 +15,10 @@ urlpatterns = [
     path('insert_multi', views.insert_multi, name='insert_multi'),
     path('update_multi', views.update_multi, name='update_multi'),
     path('delete_multi', views.delete_multi, name='delete_multi'),
+    path('auth_join', views.auth_join, name='auth_join'),
+    path('auth_index', views.auth_index, name='auth_index'),
+    path('auth_login', views.auth_login, name='auth_login'),
+    path('auth_logout', views.auth_logout, name='auth_logout'),
+    path('auth_edit', views.auth_edit, name='auth_edit'),
+    path('auth_pw', views.auth_pw, name='auth_pw'),
 ]

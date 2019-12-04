@@ -100,7 +100,7 @@ fb.save()
 fb = Feedback.objects.get(pk=2)
 fb.delete()
 -> 마찬가지로 객체 불러와서 자장시키고, 그 객체를 delete해주어서 삭제해주기
----------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 20191203
 placeholder :  
 <input type="text" placeholder="내용을 입력하세요.">
@@ -124,4 +124,27 @@ request.POST.getlist("id[]"):
 Student.objects.filter(id__in=chk).delete()
 -> id__in=chk는
 -> SQL문의 DELETE FROM SHOP_STUDENT WHERE IN(chk)와 같다
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+20191204
+Django에서 제공해주는 DB중에 AUTH_USER라는 테이블이있다.
+이것을 이용하면 User가 로그인하고 로그아웃되는기능을 Session을 사용하지않고도 사용할수있다
+그래서 Shop에 AUTH_USER html, view를 만들어서 사용해본다
+
+User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+-> create_user는 회원정보를 간단하게 가입시킬수있는 방법이다
+
+Django Autentication:
+-> Django는 인증 기능이 정말 잘 구현되어 있다. 그래서 인증 기능 구현에 크게 시간을 소비할 일이 없다.
+    그래서 이미 만들어져있는 Framework를 잘이용한다면 Session을 사용하지않고도 충분히 사용이 가능하다(AUTH_USER같은 것들을 사용하고, create_user같은것들을사용하여서)
+
+유효성 검사()   
+-> 같은지 안같은지 확인해주며, 암호가 같은지 아닌지를 확인한다 javascrpit를 사용하여서 알림창 사용가능
+-> sweetalert2를 사용하여 이쁘게 만들수있다 부트스트랩과 비슷
+
+https://sweetalert2.github.io/#download
+->alert 사용
+https://summernote.org/getting-started/#basic-api
+https://ckeditor.com/ckeditor-5/demo/#balloon
+http://naver.github.io/smarteditor2/
+->게시판
 

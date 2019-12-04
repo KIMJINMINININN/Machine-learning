@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>auth_index</title>
+</head>
+<body>
+    {% if not request.user.is_authenticated %}
+    <a href="/blog/auth_login">로그인</a>
+    <a href="/blog/auth_join">회원가입</a>
+    {% else %}
+        {{ request.user }}님 로그인
+        <a href="/blog/auth_edit">회원정보수정</a>
+        <a href="/blog/auth_pw">비밀번호변경</a>
+        <a href="/blog/auth_logout">로그아웃</a>
+    {% endif %}
+</body>
+</html>
