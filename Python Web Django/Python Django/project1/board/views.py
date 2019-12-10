@@ -18,7 +18,7 @@ def index(request):
 
 def home(request):
     return render(request,'board/home.html')
-
+    
 def list(request):
     '''
     cursor = connection.cursor()
