@@ -1,11 +1,11 @@
+from bs4 import BeautifulSoup
 from selenium import webdriver
+import time,requests
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 
-from bs4 import BeautifulSoup
 
 url = 'https://store.naver.com/attractions/list?query=%EA%B3%B5%EB%B0%A9&region=%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C&sessionid=k7c5powyTDiE4qpnwDaWxg%3D%3D&sortingOrder=precision'
-
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 

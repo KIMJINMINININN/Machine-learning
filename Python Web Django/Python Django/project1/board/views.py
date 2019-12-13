@@ -6,8 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from base64 import b64encode
 from django.db import connection
 
-
-from .models import Board
+# from .models import Board
 
 def index(request):
     # cursor = connection.cursor()
