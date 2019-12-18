@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/static/assets/css/main.css" />
+    <title>공방나라</title>
+</head>
+<body>
+    <html>
+        <head> 
+            <title>공방나라</title>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="stylesheet" href="/static/assets/css/main.css" />
+        </head>
+        
+        <body>
+            <!-- Header -->
+        <section id="one" class="wrapper">
+            <div class="inner">
+                <header id="header">
+                        <a href="/home/index" class="logo"><h1>Gongbang Nara</h1></a>
+                        <nav id="nav">
+                        {% if 'userid' not in request.session %}
+                            <a href="/home/index">Home</a>
+                            <a href= "/member/login">로그인</a>
+                            <a href= "/member/join">회원가입</a>
+                        {% else %}
+                            {{request.session.username}}님 환영합니다.
+                            <a href ="/member/logout" class="btn btn-outline-success">로그아웃</a>&nbsp;&nbsp;
+                            <a href ="/member/delete" class="btn btn-outline-success">회원탈퇴</a>&nbsp;&nbsp;
+                            <a href ="/member/edit" class="btn btn-outline-success">정보수정</a>&nbsp;&nbsp;
+                            <a href ="/cla_1/submit_ch" class="btn btn-outline-success">수강정보확인</a>&nbsp;&nbsp;
+    
+                            {% if 'admin' in request.session.userid %}
+                                <a href ="/bo_1/Selenium" class="btn btn-outline-success">공방정보 최신화</a>&nbsp;&nbsp;
+                            {% endif %}
+                        {% endif %}
+            
+                        </nav>
+                        <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+                </header>
+            </div>
+        </section>
+    
+            <!-- One -->
+    
+    
+                <section id="two" class="wrapper style1 special">
+                    <div class="inner">
+                        <header>
+                            <div class="image round">
+                                <style>
+                                        .max-small {
+                                            width: auto; height: auto;
+                                            max-width: 100px;
+                                            max-height: 100px;
+                                        }
+                                </style>
+                                <img class='max-small' src="/static/images/100.jpg" alt="Person 1">
+                            </div>
+                            <div class = "form-inline" >
+                                <p><h2>GONGBANG NARA</h2></p>
+                            </div>
+                        </header>
+                    </div>
+                </section>
+                <div class = "container">
+                    <form action = '/cla_1/submit_ed' method="post">
+                        <div class = "box"> 
+                            <div class ="form-inline">
+                                <input type='hidden' value="{{request.session.userid}}" name ='id'/>
+                                <label type = "text"><h2>{{request.session.username}}님</h2></label><br/>
+                                <label type = "text" name="na"><h2>수강처: {{data.title}}</h2></label><br/>
+                                <div class ="form-inline" style ="margin-top:5px">
+                                
+                                수정날짜<input type="text" name = 'date_1' class = "form-control" placeholder ="변경날짜" value = "{{data.date}}"/>
+                                <p></p>
+                                변경내용<input type="text" name = 'content' class = "form-control" placeholder ="변경내용" value = "{{data.content}}"/>
+                                </div>
+                                <p></p><input type = "submit" class="button alt" value = "변경"/>
+                            </div>
+                        </div>
+                    </form>    
+                </div> 
+            </body>
+            </html>

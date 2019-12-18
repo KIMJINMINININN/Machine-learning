@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<!--
+	Theory by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head> 
+		<title>공방나라</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/static/assets/css/main.css" />
+	</head>
+    
+	<body>
+        <!-- Header -->
+	<section id="one" class="wrapper">
+		<div class="inner">
+			<header id="header">
+					<a href="/home/index" class="logo"><h1>Gongbang Nara</h1></a>
+					<nav id="nav">
+                    {% if 'userid' not in request.session %}
+						<a href="/home/index">Home</a>
+						<a href= "/member/login">로그인</a>
+						<a href= "/member/join">회원가입</a>
+                    {% else %}
+                        {{request.session.username}}님 환영합니다.
+                        <a href ="/member/logout" class="btn btn-outline-success">로그아웃</a>&nbsp;&nbsp;
+                        <a href ="/member/delete" class="btn btn-outline-success">회원탈퇴</a>&nbsp;&nbsp;
+                        <a href ="/member/edit" class="btn btn-outline-success">정보수정</a>&nbsp;&nbsp;
+                        <a href ="/cla_1/submit_ch" class="btn btn-outline-success">수강정보확인</a>&nbsp;&nbsp;
+
+						{% if 'admin' in request.session.userid %}
+							<a href ="/bo_1/Selenium" class="btn btn-outline-success">공방정보 최신화</a>&nbsp;&nbsp;
+						{% endif %}
+					{% endif %}
+        
+					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+			</header>
+		</div>
+	</section>
+		<!-- One -->
+			<section id="one" class="wrapper">
+				<div class="inner">
+					<div class="flex flex-3">
+					</div>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style1 special">
+				<div class="inner">
+					<header>
+                        <div class="image round">
+                            <style>
+                                    .max-small {
+                                        width: auto; height: auto;
+                                        max-width: 100px;
+                                        max-height: 100px;
+                                    }
+                            </style>
+                            <img class='max-small' src="/static/images/100.jpg" alt="Person 1">
+                        </div>
+                        <h2>회원탈퇴페이지</h2>
+                    </header>
+                </div>
+            </section>
+
+                <div class = "container">
+                        <div class ="box">
+                            <form action ='/member/delete' method = 'POST'>
+                                    <p><h3>비밀번호확인</h3></p>
+                                    <p><input type="password" name ="pw1"/></p>
+                                    <p><h3>삭제하시겠습니까?</h3></p>
+                                    <input type = "submit" class="button alt" value = "YES">
+                                    <a href ="/home/index" class="button alt" >NO</a>
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </section>
+</html>

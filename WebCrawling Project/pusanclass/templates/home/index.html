@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<title>공방나라</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/static/assets/css/main.css" />
+	</head>
+    <body>
+        <!-- Header -->
+        <section id="one" class="wrapper">
+            <div class="inner">
+                <header id="header">
+                        <a href="/home/index" class="logo"><h1>Gongbang Nara</h1></a>
+                        <nav id="nav">
+                        {% if 'userid' not in request.session %}
+                            <a href="/home/index">Home</a>
+                            <a href= "/member/login">로그인</a>
+                            <a href= "/member/join">회원가입</a>
+                        {% else %}
+                            {{request.session.username}}님 환영합니다.
+                            <a href ="/member/logout" class="btn btn-outline-success">로그아웃</a>&nbsp;&nbsp;
+                            <a href ="/member/delete" class="btn btn-outline-success">회원탈퇴</a>&nbsp;&nbsp;
+                            <a href ="/member/edit" class="btn btn-outline-success">정보수정</a>&nbsp;&nbsp;
+                            <a href ="/cla_1/submit_ch" class="btn btn-outline-success">수강정보확인</a>&nbsp;&nbsp;
+    
+                            {% if 'admin' in request.session.userid %}
+                                <a href ="/bo_1/Selenium" class="btn btn-outline-success">공방정보 최신화</a>&nbsp;&nbsp;
+                            {% endif %}
+                        {% endif %}
+            
+                        </nav>
+                        <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+                </header>
+            </div>
+        </section>
+    
+            <!-- One -->
+            <section id="one" class="wrapper">
+                <div class="inner">
+                    <div class="flex flex-3">
+                    </div>
+                </div>
+            </section>
+    
+                <section id="two" class="wrapper style1 special">
+                    <div class="inner">
+                        <header>
+                            <div class="image round">
+                                <style>
+                                        .max-small {
+                                            width: auto; height: auto;
+                                            max-width: 100px;
+                                            max-height: 100px;
+                                        }
+                                </style>
+                                <img class='max-small' src="/static/images/100.jpg" alt="Person 1">
+                            </div>
+                            <div class = "form-inline" >
+                                <p><h2>GONGBANG NARA</h2></p>
+                            </div>
+                        </header>
+                    </div>
+                </section>
+            </div>
+            <div class="container">
+                    <form action ="/bo_1/list" method="get">
+                        <div class="box">
+                            <select name="type" class="form-control">
+                                <option value="title">상호명</option> 
+                                <option value="opentime">영업시간</option>
+                                <option value="ellipsis_area">교육내용</option>
+                                <option value="addressroad">주소</option>
+                            </select>
+                            <p></p>
+                            <input type="text" name="text" button type = "button" class="form-control" placeholder='검색어'/>
+                            <p></p>
+                            <input type="submit" class="button alt" value='검색'/>
+                        </div>
+                    </form>
+            </div>
+    
+    
+    
+    
+            <!-- Two -->
+                <section id="two" class="wrapper style1 special">
+                    <div class="inner1">
+                        <header>
+                            <h2>원하시는 공방을 찾아보세요</h2>
+                            <a href="/bo_1/list" class="button alt2"  ><h3>부산광역시</h3></a>
+                        </header>
+    
+                    <div class = "box1">
+                        <div class="flex flex-8">
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=강서구" class="button alt2"  ><h3>강서구</h3></a>
+                            </div> 
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=금정구" class="button alt2"  ><h3>금정구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=기장구" class="button alt2" ><h3>기장군</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=남구" class="button alt2" ><h3>남구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=동구" class="button alt2"><h3>동구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=동래구" class="button alt2"><h3>동래구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=부산진구" class="button alt2"><h3>부산진구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=북구" class="button alt2"><h3>북구</h3></a>
+                            </div>
+                        </div>
+                        <div class="flex flex-8">
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=사상구" class="button alt2"><h3>사상구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=사하구" class="button alt2"><h3>사하구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=서구" class="button alt2"><h3>서구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=수영구" class="button alt2"><h3>수영구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=연제구" class="button alt2"><h3>연제구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=영도구" class="button alt2"><h3>영도구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=중구" class="button alt2"><h3>중구</h3></a>
+                            </div>
+                            <div class="box person1">
+                            <a href="/bo_1/list?type=addressroad&text=해운대구" class="button alt2"><h3>해운대구</h3></a>
+                            </div>
+                        </div>
+                    </div>
+    
+                </section>
+            <!-- Footer -->
+                <footer id="footer">
+                    <div class="inner">
+                        <div class="flex">
+                            <div class="copyright">
+    
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+    
+            <!-- Scripts -->
+    
+    
+        </body>
+</html>

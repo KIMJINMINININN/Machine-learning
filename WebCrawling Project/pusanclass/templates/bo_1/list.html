@@ -1,0 +1,159 @@
+<!doctype html>
+<head>
+    <title>공방나라</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/assets/css/main.css" />
+</head>
+</head>
+<!-- One -->
+<section id="one" class="wrapper">
+    <div class="inner">
+        <header id="header">
+                <a href="/home/index" class="logo"><h1>Gongbang Nara</h1></a>
+                <nav id="nav">
+                {% if 'userid' not in request.session %}
+                    <a href="/home/index">Home</a>
+                    <a href= "/member/login">로그인</a>
+                    <a href= "/member/join">회원가입</a>
+                {% else %}
+                    {{request.session.username}}님 환영합니다.
+                    <a href ="/member/logout" class="btn btn-outline-success">로그아웃</a>&nbsp;&nbsp;
+                    <a href ="/member/delete" class="btn btn-outline-success">회원탈퇴</a>&nbsp;&nbsp;
+                    <a href ="/member/edit" class="btn btn-outline-success">정보수정</a>&nbsp;&nbsp;
+                    <a href ="/cla_1/submit_ch" class="btn btn-outline-success">수강정보확인</a>&nbsp;&nbsp;
+
+                    {% if 'admin' in request.session.userid %}
+                        <a href ="/bo_1/Selenium" class="btn btn-outline-success">공방정보 최신화</a>&nbsp;&nbsp;
+                    {% endif %}
+                {% endif %}
+    
+                </nav>
+                <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+        </header>
+    </div>
+</section>
+
+<section id="two" class="wrapper style1 special">
+    <div class="inner1">
+        <div class="container">
+            <div class="image round">
+                <style>
+                        .max-small {
+                            width: auto; height: auto;
+                            max-width: 100px;
+                            max-height: 100px;
+                        }
+                </style>
+            <img class='max-small' src="/static/images/100.jpg" alt="Person 1">
+        </div>
+        <header>
+            <h2>GONGBANG NARA</h2>
+            <p>원하는 지역을 선택하여 주세요</p>
+        </header>
+        </div>
+        <div class = "box1">
+            <div class="flex flex-8">
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=강서구" class="button alt2"  ><h3>강서구</h3></a>
+                </div> 
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=금정구" class="button alt2"  ><h3>금정구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=기장구" class="button alt2" ><h3>기장군</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=남구" class="button alt2" ><h3>남구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=동구" class="button alt2"><h3>동구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=동래구" class="button alt2"><h3>동래구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=부산진구" class="button alt2"><h3>부산진구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=북구" class="button alt2"><h3>북구</h3></a>
+                </div>
+            </div>
+            <div class="flex flex-8">
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=사상구" class="button alt2"><h3>사상구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=사하구" class="button alt2"><h3>사하구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=서구" class="button alt2"><h3>서구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=수영구" class="button alt2"><h3>수영구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=연제구" class="button alt2"><h3>연제구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=영도구" class="button alt2"><h3>영도구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=중구" class="button alt2"><h3>중구</h3></a>
+                </div>
+                <div class="box person1">
+                <a href="/bo_1/list?type=addressroad&text=해운대구" class="button alt2"><h3>해운대구</h3></a>
+                </div>
+        </div>
+    </div>
+
+</section>
+<body>
+
+
+    <table class ='table'>
+        <tr>
+        <td>
+    <div class="flex container">
+        {% for post in posts %}
+                <div class="flex item" style="cursor: pointer; outline: 0px;">
+                    <div class="box center-block" style="cursor: pointer; outline: 0px;"><a href= "/bo_1/list_c?no={{ post.id_no }}"><img src="data:image/jpeg;base64,{{post.image}}" width="200px" height="200px"></a>
+                        <div class="inner center-block">
+                        <h5><a href= "/bo_1/list_c?id_no={{ post.id_no }}"></a>{{post.title}}</h5>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+        </td>
+        </tr>
+    </div>
+    </table>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 py-5 border">
+            <ul class="pagination mx-auto">
+                {% if posts.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{posts.previous_page_number}}&type={{searchtype}}&text={{searchkeyword}}">Previous</a></li>
+                {% endif %}
+                {% for i in b %}
+                <span><a href="?page={{i}}&type={{searchtype}}&text={{searchkeyword}}">{{i}}</a></span>
+                <span>/</span>
+                {% endfor %}
+                {% if posts.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{posts.next_page_number}}&type={{searchtype}}&text={{searchkeyword}}">Next</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div> 
+    </div>
+    
+    
+    
+    </div> 
+    <div class="jumbotron hn" style="background-color: transparent !important;">
+        <h3 class="text-secondary">GongBang</h3>
+        <p>공방나라 부산편<span class="text-primary">빅데이터과정1기</span></p>
+    </div>
+</div>
+</body>
+</html>

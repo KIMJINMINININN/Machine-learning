@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>공방나라</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/static/assets/css/main.css" />
+</head>
+<body>
+    <!-- Header -->
+    
+
+        <header id="header">
+
+            <div class="inner">
+                <a href="/home/index" class="logo"><h1>Gongbang Nara</h1></a>
+                <nav id="nav">
+                    <a href="/home/index">Home</a>
+                    <a href= "/member/login">로그인</a>
+                    <a href= "/member/join">회원가입</a>
+
+                
+                </nav>
+                <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+            </div>
+        </header>
+
+    <!-- One -->
+        <section id="one" class="wrapper">
+            <div class="inner">
+                <div class="flex flex-3">
+
+                
+                </div>
+            </div>
+        </section>
+
+    <!-- Two -->
+        <section id="two" class="wrapper style1 special">
+            <div class="inner">
+                <header>
+                    <div class="image round">
+                        <style>
+                                .max-small {
+                                    width: auto; height: auto;
+                                    max-width: 100px;
+                                    max-height: 100px;
+                                }
+                        </style>
+                    <img class='max-small' src="/static/images/100.jpg" alt="Person 1">
+                </div>
+
+                    <h2>로그인</h2>
+
+                </header>
+                <div class = "container">
+                    <form action = "/member/login" method="post">
+                        <div class ="box">
+
+                            <label style=width:80px></label>
+                            <input type="text" id="id" name="id" accesskey="L" placeholder="아이디" class="int" maxlength="41" value="">
+
+                            <label style=width:80px></label>
+                            <input type="password" id="id" name="pw1" accesskey="L" placeholder="비밀번호" class="int" maxlength="41" value="">
+
+                            <hr/>
+                            <input type = "submit" class="botton alt" value = "로그인">
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+    <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+                <div class="flex">
+                    <div class="copyright">
+                    </div>
+                </div>
+            </div>
+        </footer>
+</body>
+</html>

@@ -1,0 +1,101 @@
+
+<!DOCTYPE HTML>
+<!--
+	Theory by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head> 
+		<title>공방나라</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/static/assets/css/main.css" />
+	</head>
+    
+	<body>
+        <!-- Header -->
+	<section id="one" class="wrapper">
+		<div class="inner">
+			<header id="header">
+					<a href="/home/index" class="logo"><h1>Gongbang Nara</h1></a>
+					<nav id="nav">
+                    {% if 'userid' not in request.session %}
+						<a href="/home/index">Home</a>
+						<a href= "/member/login">로그인</a>
+						<a href= "/member/join">회원가입</a>
+                    {% else %}
+                        {{request.session.username}}님 환영합니다.
+                        <a href ="/member/logout" class="btn btn-outline-success">로그아웃</a>&nbsp;&nbsp;
+                        <a href ="/member/delete" class="btn btn-outline-success">회원탈퇴</a>&nbsp;&nbsp;
+                        <a href ="/member/edit" class="btn btn-outline-success">정보수정</a>&nbsp;&nbsp;
+                        <a href ="/cla_1/submit_ch" class="btn btn-outline-success">수강정보확인</a>&nbsp;&nbsp;
+
+						{% if 'admin' in request.session.userid %}
+							<a href ="/bo_1/Selenium" class="btn btn-outline-success">공방정보 최신화</a>&nbsp;&nbsp;
+						{% endif %}
+					{% endif %}
+        
+					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+			</header>
+		</div>
+	</section>
+	
+    <body>
+        <!-- Header -->
+		<section id="two" class="wrapper style1 special">
+			<div class="inner">
+				<header>
+					<div class="image round">
+						<style>
+								.max-small {
+									width: auto; height: auto;
+									max-width: 100px;
+									max-height: 100px;
+								}
+						</style>
+						<img class='max-small' src="/static/images/100.jpg" alt="Person 1">
+					</div>
+				</header>
+			</div>
+		</section>
+		<!-- Two -->
+
+
+		<article id="four" class="post invert style2 alt">
+			<div class="image" style="background-image: background-position: 60% center;">
+				<a href= "/bo_1/list_c?no={{ data.id_no }}">
+				<img src="data:image/jpeg;base64,{{data.image}}" alt="" data-position="10% center" /></a>
+			</div>
+				<div class="content">
+					<div class="inner">
+						<header>
+							<p class="info"><h2>{{data.title}}</h2></p>
+							<p>주소 : {{ data.addressroad }}</p>
+						</header>
+							<p>홈페이지 : <a href="{{data.pageaddress}}">{{ data.pageaddress }}</a></p>
+							<p>전화번호 : {{ data.number }}</p>
+							<p>영업시간 : {{ data.opentime }}</p>
+							<p>내용 : {{data.info}}</p>
+							<p>공방정보 :{{ data.ellipsis_area }}</p>
+						<ul class="actions">
+							<p></p>
+							<li><div type="button" class="button alt" onclick="history.go(-1)">목록으로</div></li>
+							<li><a href="/cla_1/submit?title={{data.title}}" class="button alt"> 클라스신청하기</a></li>
+						</ul>
+					</div>
+				</div>
+		</article>
+    </body>
+</html>
+
+
+</div> 
+<div class="jumbotron hn" style="background-color: transparent !important;">
+	<h3 class="text-secondary">GongBang</h3>
+	<p>공방나라 부산편<span class="text-primary">빅데이터과정1기</span></p>
+</div>
+</div>
+</body>
+</html>
