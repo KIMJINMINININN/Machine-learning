@@ -55,28 +55,6 @@ def list(request):
             b.append(a)
     return render(request, "bo_1/list.html",{'posts':posts, 'total': total, 'b':b , 'searchtype':searchtype, 'searchkeyword':searchkeyword})
 
-# def list_ca(request):
-#     if request.method == 'GET':
-#         a = B_list.objects.all().order_by('-id_no')
-#         road = request.GET.get('addressroad',0)
-#         if road == '해운대구':
-#             a = B_list.objects.filter(addressroad__icontains=road)
-#         rows = a.values()
-
-#         page = request.GET.get('page',1)
-#         p = Paginator(rows, 10)
-#         posts = p.get_page(page)
-#         for i in rows:
-#             if i['image'] :                      #(  )
-#                 data = i['image'].read()     #이미지 파일
-#                 image = b64encode(data).decode("utf-8")
-#             else :
-#                 file = open("./static/image/aa.jpg","rb") #이미지 없을때 대체방법 
-#                 data =file.read()
-#                 image =b64encode(data).decode("utf-8")
-#     return render(request, "bo_1/list_ca.html",{'image':image, 'data':rows, 'posts':posts})
-
-
 def list_c(request):
     no = [request.GET['no']]
     cursor = connection.cursor()
@@ -114,39 +92,42 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 
-
-
-
+#Selenium 시작 함수
 def Selenium(request):
     count=0
     driver = webdriver.Chrome('./chromedriver.exe')
     driver.get('https://www.naver.com/')
+    #naver driver의 내용을 가져온다
     elem = driver.find_element_by_name("query")
     elem.send_keys("부산공방")
+    #부산공방이라고 네이버 검색창에 입력
     elem.submit()
     time.sleep(1)
     last_tab = driver.window_handles[-1]
     driver.switch_to.window(window_name=last_tab)
+    #last_tab에 가장 최근에 열린 탭에 handles를 입력
     gongbang = driver.find_element_by_class_name("go_more")
     gongbang.click()
+    #더보기 클릭
     time.sleep(2)
     last_tab1 = driver.window_handles[-1]
     driver.switch_to.window(window_name=last_tab1)
     #페이지 들어와서 list 받는것 시작
     #페이지, 화살표부분
     switchnum = driver.find_elements_by_class_name('pagination_inner')
-    switcharrow = switchnum[0].find_elements_by_class_name('btn_next')
-    # switcharrow[0].click()
+    switcharrow = switchnum[0].find_elements_by_class_name('btn_next')#화살표 부분
     switchnum1 = switchnum[0].find_elements_by_class_name('num') #숫자 넘기기
     while(True):
-        classtext = switcharrow[0].get_attribute('class')
-        if 'disable' in classtext:
+        classtext = switcharrow[0].get_attribute('class') #화살표부분 클래스의 이름을 받아와서
+        if 'disable' in classtext:#만약 disable이라면 화살표를 사용할수없다면
             loca = driver.find_element_by_class_name('list_place_col1')
-            for a in range(0,5): #0~4 0,5
+            for a in range(0,5):
                 print('test입니다')
+                #다음번호를 클릭
                 switchnum1[a].click()
                 time.sleep(2)
                 craw(loca,driver)
+                #list에서 크롤링을 시작 하는 부분
                 time.sleep(2)
                 if a == 4:
                     count = a
@@ -156,30 +137,31 @@ def Selenium(request):
             #->가 없다
             #page가 끝나고 break
         else:
+        #클래스 이름을 받아와서 화살표를 사용할수있다면
         #->가있다
         #page가 끝나고 click
             loca = driver.find_element_by_class_name('list_place_col1')
             for a in range(0,5):#0~4 0,5
+                    #다음번호를 클릭
                     switchnum1[a].click()
                     time.sleep(1)
                     craw(loca,driver)
+                    #list에서 크롤링을 시작 하는 부분
                     time.sleep(3)
             switcharrow[0].click()
+            #화살표 클릭
             time.sleep(5)
     return render(request,'home/index.html')
 
 
 def craw(loca,driver):
-    # loca = driver.find_element_by_class_name('list_place_col1')
-
     li = loca.find_elements_by_tag_name('li')
+    #공방 리스트에 대해서 가져오기
     label_1 = {'title':'','number':'','addressroad':'','addressgi':'','opentime':'','pageaddress':'','info':'','ellipsis_area':''}
     labellist = []
     label = []
-    # image=[]
     labelid = ""
     for i,e in enumerate(li):
-    # for i in range(1, 6, 1):
         title=" "
         number=" "
         addressroad =" "
@@ -189,140 +171,101 @@ def craw(loca,driver):
         info=" "
         ellipsis_area=" "
         a = li[i].find_element_by_tag_name('a')
-        url1 = a.get_attribute("src")
         a.click()
         time.sleep(2)
 
         last_tab = driver.window_handles[-1]
         driver.switch_to.window(window_name=last_tab)
         source = driver.page_source
+        #현재 페이지의 내용을 가져오고
         bs=BeautifulSoup(source,'html.parser')
         time.sleep(2)
         if(bs.find('div','biz_name_area').find('strong','name')):
             title = bs.find('div','biz_name_area').find('strong','name').text
+            #현재 페이지에서 Title에 대해서 가져오기
         else:
             pass
-        # img2 = img1[0].get_attribute('src')
-        # img = labeldr[0].find_elements_by_xpath('//*[@id="panel04"]/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div/img')
-        # print(labeldr[0].get(img[0].get_attribute('img')))
-        
-        
-
-        # img[0].screenshot(title+str(i)+".png")
-        # test1 = test[0].get('aria-controls')
         entire = bs.find('div', class_='bizinfo_area')
         number = entire.find('div', class_='txt').text
         if(entire.find('ul', class_='list_address')):
             address = entire.find('ul', class_='list_address').find_all('li')
+            #주소 가져오기
             adlen = len(address)
         else:
             pass
         # print(address[0].text)
-        if(adlen == 2):
+        if(adlen == 2): # 주소 내용이 두개라면
             if(address[0]):
-                addressroad = address[0].text
+                addressroad = address[0].text #도로명주소
             elif(address[1]):
-                addressgi = address[1].text
+                addressgi = address[1].text #기본주소
             else:
                 pass
-        elif(adlen == 1):
+        elif(adlen == 1): # 주소 내용이 한개라면
             if(address[0]):
                 addressroad = address[0].text
                 addressgi = address[0].text
         else:
             pass
-
-        # if(address.find('span', class_='addr')):
-        #     addressgi = address.find('span', class_='addr').text
-        # else:
-        #     pass
-        if(entire.find('div', class_='biztime')):
+        if(entire.find('div', class_='biztime')):#오픈시간
             opentime = entire.find('div', class_='biztime').text
         else:
             pass
-        if(entire.find('a', class_='biz_url')):
+        if(entire.find('a', class_='biz_url')):#페이지 주소
             pageaddress = entire.find('a', class_='biz_url').text
         else:
             pass
-        if(entire.find('div', 'convenience')):
+        if(entire.find('div', 'convenience')):#관련정보
             info = entire.find('div', 'convenience').text
         else: 
             pass
-        # if(bs.find('div', 'ellipsis_area')):
-        #     try:
-        #     ea = driver.find_elements_by_class_name('ellipsis_area')
-        #     if(ea[0].find_elements_by_class_name('btn_more')):
-        #         bn = ea[0].find_elements_by_class_name('btn_more')
-        #         print(bn)
-        #         print(bn[0])
-        #         bn[0].click()
-        #         time.sleep(4)
-        #         source = driver.page_source
-        #         bs=BeautifulSoup(source,'html.parser')
-        #         ellipsis_area = bs.find('div', 'ellipsis_area').text
-        #     else:
-        #         pass
-        #     Exception:
-        #         ellipsis_area = "error ?????"
-        # else:
-        #     pass
-        if(bs.find('div', 'ellipsis_area')):
-            ea = driver.find_elements_by_class_name('ellipsis_area')
-            if(ea[0].find_elements_by_class_name('btn_more')):
-                element = ea[0].find_element_by_class_name('btn_more')
-                driver.execute_script("arguments[0].click();", element)
+        if(bs.find('div', 'ellipsis_area')):#설명
+            ea = driver.find_elements_by_class_name('ellipsis_area')#태그를 찾고
+            if(ea[0].find_elements_by_class_name('btn_more')): 
+                element = ea[0].find_element_by_class_name('btn_more') 
+                driver.execute_script("arguments[0].click();", element) #강제로 click하게 javascrpit를 클릭
                 time.sleep(4)
                 source = driver.page_source
                 bs=BeautifulSoup(source,'html.parser')
-                ellipsis_area = bs.find('div', 'ellipsis_area').text
+                ellipsis_area = bs.find('div', 'ellipsis_area').text # 내용을 받아서 내용을 text로 변환
             else:
                 pass
         else:
             pass
-        test = bs.select('#tabs')
+        test = bs.select('#tabs') #id가 tabs인 것을 찾아서
         for i in test[0]:
-            label = i.get('aria-label')
-            controls = i.get('aria-controls')
-            if '사진요약' in label:
-                labelid = i.get('id')
+            label = i.get('aria-label') #라벨
+            controls = i.get('aria-controls') #컨트롤할 부분
+            if '사진요약' in label: #라벨안에 사진요약이라는 부분이 있다면
+                labelid = i.get('id') # i안에 id를 저장
             else:
                 pass
         if driver.find_elements_by_id(labelid):
             labeldr = driver.find_elements_by_id(labelid)
-            # print(labeldr)
-            # labeldr[0].click()
-            # topics_xpath = driver.find_element_by_xpath('//*[@id='+labelid+'"]"')
-            # element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, labeldr)))
             element = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.ID, labelid)))
+            #WebDriver에게 만약 늦게 id를 받아오더라도 3초동안 기다리라고 지시후 저장
             element.click()
             time.sleep(3)
             source = driver.page_source
             bs=BeautifulSoup(source,'html.parser')
             if len(bs.select('#'+controls+'> div > div > div.view_area > div.select_photo_area > div.list_photo > div > div:nth-child(1) > div > div')) == 0:
                 imgsrc = bs.select('#'+controls+'> div > div > div.view_area > div.select_photo_area > div.list_photo > div > div:nth-child(1) > a > div')
-                #panel02 > div > div > div.view_area > div.select_photo_area > div.list_photo > div > div:nth-child(1) > a > div                           
-                # print(imgsrc)
-                try:
+                try: #img 태그가 가끔 없기때문에 예외처리
                     img1 = imgsrc[0].select('img')
                 except:
                     img1 = None
-                if img1 is not None:
+                if img1 is not None: #만약 img1가 있다면
                     imgurl = img1[0].attrs['src']
                     img10 = urllib.request.urlopen(imgurl).read()
                 else:
                     pass
-                
-                # image_64_encode = base64.encodebytes(img10)
-                # urllib.request.urlretrieve(imgurl, './img/'+title+'.jpg')
-               
             else: 
                 imgsrc = bs.select('#'+controls+'> div > div > div.view_area > div.select_photo_area > div.list_photo > div > div:nth-child(1) > div > div')                                
-                # print(imgsrc)
-                try:
+                try: #img 태그가 가끔 없기때문에 예외처리
                     img1 = imgsrc[0].select('img')
                 except:
                     img1 = None
-                if img1 is not None:
+                if img1 is not None: #만약 img1가 있다면
                     imgurl = img1[0].attrs['src']
                     img10 = urllib.request.urlopen(imgurl).read()
                 else:
@@ -330,11 +273,9 @@ def craw(loca,driver):
                 
             print(img10)
             print(type(img10))
-                # image_64_encode = base64.encodebytes(img10)
-                # urllib.request.urlretrieve(imgurl, './img/'+title+'.jpg')
         else:
             pass
-
+        #라벨 dictionary에 crawling한 내용들을 저장
         label_1 = {'title':'','number':'','addressroad':'','addressgi':'','opentime':'','pageaddress':'','info':'','ellipsis_area':'','image':''}
         label_1['title']         = title
         label_1['number']        =number 
@@ -346,8 +287,8 @@ def craw(loca,driver):
         label_1['ellipsis_area'] = ellipsis_area
         label_1['image']         = img10
         # image.append(img10)
+        #list에 append label_1의 내용을 추가
         labellist.append(label_1)  
-        
         print(labellist)
         print(title)
         print(number)
@@ -371,43 +312,6 @@ def craw(loca,driver):
         info     = i['info']
         area     = i['ellipsis_area']
         image    = i['image']
-        
-        # al = [ti, nu, adroad, adgi, opentime, pagead, info, area, image.read()]
-        # cursor = connection.cursor()
-        # sql = 'INSERT INTO bo_1_b_list SET title= 'ti', number='nu', addressroad= 'adroad', addressgi='adgi', opentime='opentime', pageaddress='pagead', info='info', ellipsis_area= 'area' '
-           
         all = B_list(title= ti, number=nu, addressroad= adroad, addressgi=adgi, opentime=opentime, pageaddress=pagead, info=info, ellipsis_area= area, image=image)
+        #model에 저장한후 save
         all.save()
-    # for a in image:    
-    #     cursor = connection.cursor()
-    #     sql= f"INSERT INTO bo_1_B_list SET image={a}"
-    #     cursor.execute(sql)
-    # # INSERT INTO web_site SET name='뉴스타파';
-    # INSERT INTO 테이블명(컬럼명) VALUES(내용들);
-    # label_1['image']         = img10
-    # image    = i['image']
-# 로딩 기다리기
-
-    # urlblog = ' '
-    # urlgram = ' '
-    # if(entire.find('ul', 'list_homepage')):
-    #     urltag = entire.find('ul', 'list_homepage')
-    #     url1 = urltag.find_all('li')
-    #     urlsize = len(url1)
-    #     if(urlsize == '1'):
-    #         if(url1[0].find('a').text == '블로그'):
-    #             urlblog = url1[0].find('a').get('href')
-    #         else:
-    #             urlgram = url1[0].find('a').get('href')
-    #     else:
-    #         pass
-    # else:
-    #     pass
-    # urltag = entire.find('ul', 'list_homepage')
-    # url1 = urltag.find_all('li')
-    # urlblog = url1[0].find('a').get('href')
-    # urlgram = url1[1].find('a').get('href')
-
-    # print(urlblog)
-    # print(urlgram)
-# Selenium()
