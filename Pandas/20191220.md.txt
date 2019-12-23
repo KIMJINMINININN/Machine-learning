@@ -1,0 +1,52 @@
+# **2019.12.20 Pandas Second Class
+***
+
+## Pandas
+s.iloc[:3] - 인덱스 값
+index 3번까지 나타나는것
+
+s.loc[:3] - 행번호로 접근하는것
+값이 3인것까지 나타나는것
+
+s = pd.Series(['Wes McKinney', 'Creator of Pandas'], index=['Person' ,'Who'])
+print(s)
+- 인덱스를 넣어서 의미있는 인덱스를 만들어줄수있다
+
+scientists = pd.DataFrame({
+    'Name' : ['Rosaline Franklin', 'William Gosset']
+})
+print(scientists)
+- DataFrame은 Dictionary에 value는 List로 되어있다
+
+scientists = pd.DataFrame({
+    'Name' : ['Rosaline Franklin', 'William Gosset'],
+    index=['Rosaline Franklin']
+    columns=['Born']
+})
+print(scientists)
+- DataFrame은 Key에 index를 넣어서 나타낼수도있다
+
+from collections import OrderedDict
+scientists = pd.DataFrame(OrderedDict({
+    'Name' : ['Rosaline Franklin', 'William Gosset'],
+    index=['Rosaline Franklin']
+    columns=['Born']
+}))
+print(scientists)
+- 정렬함수 OrderedDict
+
+scientists = pd.DataFrame({
+    'Name' : ['Rosaline Franklin', 'William Gosset'],
+    index=['Rosaline Franklin']
+    columns=['Born']
+    })
+print(scientists)
+first_row = scientists.loc['William Gosset']
+print(type(first_row))
+- loc은 index를 사용하는데 DataFrame안에서 index를 William Gosset으로 지정해주었으므로 가능
+
+scientists = pd.read_csv('../data/scientists.csv')
+scientists.head()
+print(ages[ages > ages.mean()])
+
+Nan == Null과 같다고 할수있다

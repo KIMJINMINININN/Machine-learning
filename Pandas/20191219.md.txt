@@ -21,13 +21,13 @@
 http://pyrasis.com/Docker/Docker-HOWTO
 
 ### 1. 도커 허브에 있는 이미지로 컨테이너 런 (최초 실행시)
-docker run --rm --name eda -itd -u vscode -p 8888:8888 -p 8088:8088 -p 6006-6015:6006-6015 -e JUPYTER_RUN=yes -v /C/Users/user/PNU_201912/eda:/home/vscode/notebooks/eda mrsono0/devremotecontainers:eda
+docker run --rm --name eda -itd -u vscode -p 8888:8888 -p 8088:8088 -p 6006-6015:6006-6015 -e JUPYTER_RUN=yes -v /c/Users/user/PNU_201912/eda:/home/vscode/notebooks/eda mrsono0/devremotecontainers:eda
 
 ### 2. 작업 진행 중 수시로
 docker commit vmelove/eda
 
 ### 3. 내가 commit 한 이미지로 컨테이너 런 실행
-docker run --rm --name eda -itd -u vscode -p 8888:8888 -p 8088:8088 -p 6006-6015:6006-6015 -e JUPYTER_RUN=yes -v /C/Users/user/PNU_201912/eda:/home/vscode/notebooks/eda vmelove/eda
+docker run --rm --name eda -itd -u vscode -p 8888:8888 -p 8088:8088 -p 6006-6015:6006-6015 -e JUPYTER_RUN=yes -v /c/Users/admin/PNU_201912/eda:/home/vscode/notebooks/eda vmelove/eda
 
 ### 4. 내가 commit한 이미지를 나의 도커 허브에 push 할때
 docker push vmelove/eda
