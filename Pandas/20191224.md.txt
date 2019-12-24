@@ -1,0 +1,20 @@
+# **2019.12.24 Pandas Third Class
+***
+
+## Pandas
+### Untitled2.ipynb 참고
+- ** 그래프의 컬러를 확인해볼수있는 메소드
+import matplotlib
+colors={}
+for name, hex in matplotlib.colors.cnames.items():
+    colors[name] = hex
+print(colors)
+
+### Seaborn 라이브러리
+
+### folium 라이브러리
+- folium conda 설치
+conda install -c conda-forge folium
+conda install -c conda-forge/label/gcc7 folium
+conda install -c conda-forge/label/cf201901 folium
+
