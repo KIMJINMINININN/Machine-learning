@@ -1,0 +1,599 @@
+# **2019.12.26 Pandas Class
+***
+
+# Data 사전 처리
+
+### **이부분은 이해가 잘안된다면 외워서 데이터를 처리해주어야한다
+
+### 누락 데이터 처리
+isnull(), notnull() 을 처리할때 같은것이지만 어떤것이 더 빨리 데이터가 처리가 될지를 고민하여서 사용하여야 시간을 효율적으로 배분시킬수있다
+
+- deck열의 NaN 개수 계산하기
+nan_deck = df['deck'].value_counts(dropna=False)
+print(nan_deck)
+
+** 결과
+NaN    688
+C       59
+B       47
+D       33
+E       32
+A       15
+F       13
+G        4
+Name: deck, dtype: int64
+
+- isnull() 메서드로 누락 데이터 개수 구하기
+print(df.head().isnull().sum(axis=0))
+
+** 결과
+survived       0
+pclass         0
+sex            0
+age            0
+sibsp          0
+parch          0
+fare           0
+embarked       0
+class          0
+who            0
+adult_male     0
+deck           3
+embark_town    0
+alive          0
+alone          0
+dtype: int64
+
+- for 반복문으로 각 열의 NaN 개수 계산하기
+missing_df = df.isnull()
+for col in missing_df.columns:
+    missing_count = missing_df[col].value_counts() # 각 열의 NaN 개수 파악
+    
+    try:
+        print(col, ': ', missing_count[True]) # NaN 값이 있으면 개수를 출력
+    except:
+        print(col,': ', 0) # NaN 값이 없으면 0개 출력
+        
+- NaN의 값은 알수없는값 NULL값은 없는값을 의미한다(Python)
+
+- NaN 값이 500개 이상인 열을 모두 삭제 - deck 열(891개중 688개의 NaN값)
+df_thresh = df.dropna(axis=1, thresh=500)
+print(df_thresh.columns)
+
+- age 열에 나이 데이터가 없는 모든 행을 삭제 - age열(891개중 177개의 NaN 값)
+df_age = df.dropna(subset=['age'], how='any', axis=0)
+print(len(df_age))
+
+- DataFrameName.dropna (axis = 0, how = 'any', thresh = None, subset = None, inplace = False)
+axis : 축은 행 / 열에 대해 정수 또는 문자열 값을 취합니다. 입력은 정수의 경우 0 또는 1이고 문자열의 경우 '인덱스'또는 '열'입니다.
+how : ( 'any'또는 'all') 'any'는 데이터가 하나라도 없으면 drop, 'all'은 모든 값이 null 인 경우에만 drop
+thresh : thresh는 최소값의 na 값이 떨어지도록 지시하는 정수 값을 사용합니다.
+subset : 삭제 프로세스가 목록을 통과하는 행 / 열로 제한되는 배열입니다.
+inplace : True 인 경우 데이터 프레임 자체를 변경합니다
+
+- age 열의 Nan값을 다른 나이 데이터의 평균으로 변경하기
+mean_age = df['age'].mean(axis=0) # age 열의 평균 계산(NaN 값 제외)
+df['age'].fillna(mean_age, inplace=True)
+
+print(df['age'].head(10))
+** 결과
+0    22.0
+1    38.0
+2    26.0
+3    35.0
+4    35.0
+5     NaN
+6    54.0
+7     2.0
+8    27.0
+9    14.0
+Name: age, dtype: float64
+- age열의 첫 10개 데이터 출력(5행에 NaN 값이 평균으로 대체)
+print(df['age'].head(10))
+** 결과
+0    22.000000
+1    38.000000
+2    26.000000
+3    35.000000
+4    35.000000
+5    29.699118
+6    54.000000
+7     2.000000
+8    27.000000
+9    14.000000
+
+- embark_town 열의 NaN값을 승선도시 중에서 가장 많이 출현한 값으로 치환하기
+import seaborn as sns
+df = sns.load_dataset('titanic')
+embark_town 열의 829행의 NaN 데이터 출력
+print(df['embark_town'][825:830])
+print('\n')
+most_freq = df['embark_town'].value_counts(dropna=True).idxmax()
+print(most_freq)
+print('\n')
+
+- embar_town 열의 NaN값을 바로 앞에 있는 828행의 값으로 변경하기
+import seaborn as sns
+titanic 데이터셋 가져오기
+df = sns.load_dataset('titanic')
+embark_town 열의 829행의 NaN 데이터 출력
+print(df['embark_town'][825:830])
+print('\n')
+df['embark_town'].fillna(method='ffill', inplace=True)
+print(df['embark_town'][825:830])
+
+
+### 중복 데이터 처리
+- 중복 데이터 처리 duplicate
+import pandas as pd
+
+df = pd.DataFrame({'c1':['a', 'a', 'b', 'a', 'b'],
+                    'c2':[1, 1, 1, 2, 2],
+                    'c3':[1, 1, 2, 2, 2]})
+print(df)
+print('\n')
+**결과
+  c1  c2  c3
+0  a   1   1
+1  a   1   1
+2  b   1   2
+3  a   2   2
+4  b   2   2
+
+- 데이터 프레임 전체 행 데이터중에서 중복값 찾기
+df_dup = df.duplicated()
+print(df_dup)
+print('\n')
+**결과
+0    False
+1     True
+2    False
+3    False
+4    False
+dtype: bool
+
+- 데이터프레임의 특정 열 데이터에서 중복값 찾기
+col_dup = df['c2'].duplicated()
+print(col_dup)
+**결과
+print(col_dup)
+0    False
+1     True
+2     True
+3    False
+4     True
+Name: c2, dtype: boo
+
+***
+### 데이터 표준화
+import pandas as pd
+import numpy as np
+
+//read_csv() 함수로 df 생성
+df = pd.read_csv('./part4/auto-mpg.csv', header=None)
+
+//열 이름을 지정
+df.columns = ['mpg', 'cylinders', 'displacement', 'horsepower', 'weight', 'acceleration', 'model year',
+                'origin', 'name']
+
+//horsepower 열의 고유값 확인
+print(df['horsepower'].unique())
+
+
+df['horsepower'].replace('?', np.nan, inplace=True) #'?'을 np.nan으로 변경
+df.dropna(subset=['horsepower'], axis=0, inplace=True) # 누락데이터 행을 삭제
+
+df['horsepower'] = df['horsepower'].astype('float') #문자열을 실수형으로 변환
+
+//horsepower 열의 자료형 확인
+print(df['horsepower'].dtypes)
+print('\n')
+
+//origin 열의 고유값 확인
+print(df['origin'].unique())
+
+//정수형 데이터를 문자형 데이터로 변환
+df['origin'].replace({1:'USA', 2:'EU', 3:'JAPAN'}, inplace=True)
+
+//origin 열의 고유값과 자료형 확인
+print(df['origin'].unique())
+print(df['origin'].dtypes)
+print('\n')
+
+# origin 열의 문자열 자료형을 범주형으로 변환
+df['origin'] = df['origin'].astype('category')
+print(df['origin'].dtypes)
+
+# model year 열의 정수형을 범주형으로 변환
+print(df['model year'].sample(3))
+df['model year'] = df['model year'].astype('category')
+print(df['model year'].sample(3))
+
+### 범주형 데이터 처리(구간 나누기)
+-histogram을 사용하여서 구간을 나누어준다
+import pandas as pd
+import numpy as np
+
+//read_csv() 함수로 df 생성
+df = pd.read_csv('./part4/auto-mpg.csv', header=None)
+
+//열 이름을 지정
+df.columns = ['mpg', 'cylinders', 'displacement', 'horsepower', 'weight', 'acceleration', 'model year',
+                'origin', 'name']
+
+//horsepower 열의 누락 데이터('?') 삭제하고 실수형으로 변환
+df['horsepower'].replace('?', np.nan, inplace=True) # '?'dmf np.nan으로 변경
+df.dropna(subset=['horsepower'], axis=0, inplace=True) # 누락데이터 행을 삭제
+df['horsepower'] = df['horsepower'].astype('float') # 문자열을 실수형으로 변환
+
+//np.histogram 함수로 3개의 bin으로 나누는 경꼐 값의 리스트 구하기
+count, bin_dividers = np.histogram(df['horsepower'], bins=3)
+print(bin_dividers)
+
+//3개의 bin에 이름 지정
+bin_names = ['저출력', '보통출력', '고출력']
+
+//pd.cut 함수로 각 데이터를 3개의 bin에 할당
+df['hp_bin'] = pd.cut(x=df['horsepower'], #데이터 배열
+                        bins=bin_dividers, # 경계 값 리스트
+                        labels=bin_names, # bin 이름
+                        include_lowest=True) # 첫 경계값 포함
+//pd.cut 함수로 각 데이터를 3개의 bin에 할당
+print(df[['horsepower', 'hp_bin']].head(15))
+
+**결과
+    horsepower hp_bin
+0        130.0   보통출력
+1        165.0   보통출력
+2        150.0   보통출력
+3        150.0   보통출력
+4        140.0   보통출력
+5        198.0    고출력
+6        220.0    고출력
+7        215.0    고출력
+8        225.0    고출력
+9        190.0    고출력
+10       170.0    고출력
+11       160.0   보통출력
+12       150.0   보통출력
+13       225.0    고출력
+14        95.0    저출력
+
+//hp_bin 열의 범주형 데이터를 더미 변수로 변환
+horsepower_dummies = pd.get_dummies(df['hp_bin'])
+print(horsepower_dummies.head(15))
+
+**결과
+hp_bin  저출력  보통출력  고출력
+0         0     1    0
+1         0     1    0
+2         0     1    0
+3         0     1    0
+4         0     1    0
+5         0     0    1
+6         0     0    1
+7         0     0    1
+8         0     0    1
+9         0     0    1
+10        0     0    1
+11        0     1    0
+12        0     1    0
+13        0     0    1
+14        1     0    0
+- 머신러닝을 할때에는 더미 데이터, 즉 숫자가 필요하기때문에 데이터들을 숫자 데이터로 변환을 해줄수도있다.
+***
+###sklern 라이브러리 간단하게 사용
+//sklern  라이브러리 불러오기
+from sklearn import preprocessing
+
+//전처리를 위한 encoder 객체 만들기
+label_encoder = preprocessing.LabelEncoder() # label encoder 생성
+onehot_encoder = preprocessing.OneHotEncoder() # one hot encoder 생성
+
+//label encoder로 문자열 범주를 숫자형 범주로 변환
+onehot_labeled = label_encoder.fit_transform(df['hp_bin'].head(15))
+print(onehot_labeled)
+print(type(onehot_labeled))
+**결과
+[1 1 1 1 1 0 0 0 0 0 0 1 1 0 2]
+<class 'numpy.ndarray'>
+
+onehot_reshaped = onehot_labeled.reshape(len(onehot_labeled), 1)
+print(onehot_reshaped)
+print(type(onehot_reshaped))
+**결과
+[[1]
+ [1]
+ [1]
+ [1]
+ [1]
+ [0]
+ [0]
+ [0]
+ [0]
+ [0]
+ [0]
+ [1]
+ [1]
+ [0]
+ [2]]
+<class 'numpy.ndarray'>
+***
+### 정규화
+- 쉽게 말해서 0~100에 잇는것을 0~1사이로 압축시킨다고 생각하면 된다
+
+- 1. 최대값을 확인한후에 최대값의 절대값으로 모든 데이터를 나누어주면 된다.
+- horserpower 열의 최대값의 절대값으로 모든 데이터를 나눠서 저장
+df.horsepower = df.horsepower / abs(df.horsepower.max())
+
+print(df.horsepower.head())
+print('\n')
+print(df.horsepower.describe())
+
+**결과
+0    0.565217
+1    0.717391
+2    0.652174
+3    0.652174
+4    0.608696
+Name: horsepower, dtype: float64
+
+count    392.000000
+mean       0.454215
+std        0.167353
+min        0.200000
+25%        0.326087
+50%        0.406522
+75%        0.547826
+max        1.000000
+Name: horsepower, dtype: float64
+***
+### 시계열 데이터
+- 연속적으로 나타나는 데이터를 시계열 데이터라한다(ex.날짜데이터)
+import pandas as pd
+
+// TImestamp의 배열 만들기 - 월 간격. 월의 시작일 기준
+ts_ms = pd.date_range(start='2019-01-01',# 날짜 범위의 시작
+                        end=None, # 날짜 범위 끝
+                         periods=6, # 생성할 TImestamp의 개수
+                         freq='MS', # 시간 간격(MS: 월의 시작일)
+                         tz='Asia/Seoul') # 시간대 (Timezone)
+print(ts_ms)
+print('\n')
+
+// 월 간격, 월의 마지막 날 기준
+ts_me = pd.date_range('2019-01-01', periods=6,
+                        freq='M', # 시간 간격(M: 월의 마지막날)
+                         tz='Asia/Seoul') # 시간대(Timezone)
+print(ts_me)
+print('\n')
+
+// 분기(3개월) 간격, 월의 마지막날 기준
+ts_3m = pd.date_range('2019-01-01', periods=6,
+                        freq='3M', # 시간 간격(3개월)
+                         tz='Asia/Seoul') # 시간대(Timezone)
+print(ts_3m)
+
+import pandas as pd
+
+//Peroid 배열 만들기 - 1개월 길이
+pr_m = pd.period_range(start='2019-01-01',# 날짜 범위의 시작
+                        end=None, # 날짜 범위 끝
+                         periods=3, # 생성할 Period 개수
+                         freq='M', # 기간의 길이 (M: 월)
+                      )
+                       
+print(pr_m)
+print('\n')
+
+//Peroid 배열 만들기 - 1시간 길이
+pr_h = pd.period_range(start='2019-01-01',# 날짜 범위의 시작
+                        end=None, # 날짜 범위 끝
+                         periods=3, # 생성할 Period 개수
+                         freq='H', # 기간의 길이 (H : 시간)
+                      )           
+print(pr_m)
+print('\n')
+
+//Peroid 배열 만들기 - 2시간 길이
+pr_2h = pd.period_range(start='2019-01-01',# 날짜 범위의 시작
+                        end=None, # 날짜 범위 끝
+                         periods=3, # 생성할 Period 개수
+                         freq='2H', # 기간의 길이 (H : 시간)
+                      )
+print(pr_2h)
+***
+## 데이터 프레임의 다른 응용
+### 함수 매핑
+- apply 함수는 dataframe일때 사용하는 함수다(지정된 컬럼 전체)
+- applymap은 각 원소 하나하나를 계산하게된다
+
+- 람다식을 사용.
+import seaborn as sns
+//titanic 데이터셋에서 age, fare 2개 열을 선택하여 데이터프레임 만들기
+titanic = sns.load_dataset('titanic')
+df = titanic.loc[:, ['age','fare']]
+df['ten'] = 10
+print(df.head())
+print('\n')
+//사용자 함수 정의
+def add_two_obj(a, b): # 두 객체의 합
+    return a + b
+//데이터프레임의 2개 열을 선택하여 적용
+//x=df, a=df['age'], b=df['ten']
+df['add'] = df.apply(lambda x: add_two_obj(x['age'], x['ten']), axis=1)
+print(df.head())
+
+- pipe 메소드 사용
+import seaborn as sns
+//titanic 데이터셋에서 age, fare 2개 열을 선택하여 데이터프레임 만들기
+titanic = sns.load_dataset('titanic')
+df = titanic.loc[:, ['age','fare']]
+df['ten'] = 10
+print(df.head())
+print('\n')
+
+//각열의 NaN 찾기 - 데이터 프레임 전달하면 데이터프레임을 반환
+def missing_value(x):
+    return x.isnull()
+
+//각 열의 NaN 개수 반환 - 데이터프레임 전달하면 시리즈 반환
+def missing_count(x):
+    return missing_value(x).sum()
+
+//데이터프레임의 총 NaN 개수 - 데이터프레임 전달하면 값을 반환
+def totoal_number_missing(x):
+    return missing_count(x).sum()
+
+//데이터프레임에 pipe() 메소드로 함수 매핑
+result_df = df.pipe(missing_value)
+print(result_df.head())
+print(type(result_df))
+print('\n')
+
+-데이터 프레임 재구성 하기
+import seaborn as sns
+
+//titanic 데이터셋에서 age, fare 2개 열을 선택하여 데이터프레임 만들기
+titanic = sns.load_dataset('titanic')
+df = titanic.loc[0:4,'survived':'age']
+print(df, '\n')
+
+//열이름의 리스트 만들기
+columns = list(df.columns.values) # 기존 열 이름
+print(columns, '\n')
+
+//열 이름을 알파벳 순으로 정렬하기
+columns_sorted = sorted(columns) # 알파벳 순으로 정렬
+df_sorted = df[columns_sorted]
+print(df_sorted, '\n')
+
+//열 이름을 기존 순서의 정반대 역순으로 정렬하기
+columns_reversed = list(reversed(columns))
+df_reversed = df[columns_reversed]
+print(df_reversed, '\n')
+
+//열 이름을 사용자가 정의한 임의의 순서로 재배치하기
+columns_customed = ['pclass', 'sex', 'age', 'survived']
+df_customed = df[columns_customed]
+print(df_customed)
+***
+### 데이터 분리
+import pandas as pd
+
+df = pd.read_excel('./part6/주가데이터.xlsx')
+print(df.head(), '\n')
+print(df.dtypes, '\n')
+
+//연, 월, 일 데이터 분리하기
+df['연월일'] = df['연월일'].astype('str') #문자열 메소드 사용을 자료형 변경
+dates =df['연월일'].str.split('-') #문자열을 split() 메서드로 분리
+print(dates.head(), '\n')
+
+//분리된 정보를 각각 새로운 열에 담아서 df에 추가하기
+df['연'] = dates.str.get(0) # dates 변수의 원소 리스트의 0번째 인덱스 값
+df['월'] = dates.str.get(1) # dates 변수의 원소 리스트의 1번째 인덱스 값
+df['일'] = dates.str.get(2) # dates 변수의 원소 리스트의 2번째 인덱스 값
+print(df.head())
+
+- 내가 원하는 조건의 정보를 선택하기
+import seaborn as sns
+
+//titanic 데이터셋에서 age, fare 2개 열을 선택하여 데이터프레임 만들기
+titanic = sns.load_dataset('titanic')
+titanic.head()
+
+//나이가 10대(10~19세)인 승객만 따로 선택
+mask1 = (titanic.age >= 10) & (titanic.age < 20)
+df_teenage = titanic.loc[mask1, :]
+print(df_teenage.head())
+print('\n')
+
+//나이가 10세 미만(0~9세)이고 여성인 승객만 따로 선택
+mask2 = (titanic.age < 10 ) & (titanic.sex == 'female')
+df_female_under10 = titanic.loc[mask2, :]
+print(df_female_under10.head())
+print('\n')
+
+//나이가 10세 미만(0~9세) 또는 60세 이상인 승객의 age, sex, alone 열만 선택
+mask3 = (titanic.age < 10) | (titanic.age >= 60)
+df_under10_morethan60 = titanic.loc[mask3, ['age', 'sex', 'alone']]
+print(df_under10_morethan60.head())
+
+**데이터 누락이 생기지 않게 주의하기!
+
+- 이러한 데이터가 있는 확인하는 isin()
+import seaborn as sns
+
+//titanic 데이터셋에서 age, fare 2개 열을 선택하여 데이터프레임 만들기
+titanic = sns.load_dataset('titanic')
+
+//IPython 디스플레이 설정 변경 - 출력할 최대 열의 개수
+pd.set_option('display.max_columns', 10)
+
+//함께 탑승한 형제 또는 배우자의 수가 3,4,5인 승객만 따로 추출 -불린 인덱싱
+mask3 = titanic['sibsp'] == 3
+mask4 = titanic['sibsp'] == 4
+mask5 = titanic['sibsp'] == 5
+df_boolean = titanic[mask3 | mask4| mask5]
+print(df_boolean.head())
+print('\n')
+
+//isin() 메서드 활용하여 동일한 조건으로 추출
+isin_filter = titanic['sibsp'].isin([3,4,5])
+df_isin = titanic[isin_filter]
+print(df_isin.head())
+
+### 데이터 프레임 합치기
+- concat으로 붙이기
+import pandas as pd
+
+df1 = pd.DataFrame({'a' : ['a0', 'a1', 'a2', 'a3'],
+                    'b' : ['b0', 'b1', 'b2', 'b3'],
+                    'c' : ['c0', 'c1', 'c2', 'c3']}, 
+                   index=[0,1,2,3])
+df2 = pd.DataFrame({'a' : ['a2', 'a3', 'a4', 'a5'],
+                    'b' : ['b2', 'b3', 'b4', 'b5'],
+                    'c' : ['c2', 'c3', 'c4', 'c5'],
+                    'd' : ['d2', 'c3', 'c4', 'c5']}, 
+                   index=[2,3,4,5])
+
+print(df1, '\n')
+print(df2, '\n')
+
+//2개의 데이터프레임을 위 아래 행 방향으로 이어 붙이듯 연결하기
+result1 = pd.concat([df1, df2])
+print(result1, '\n')
+
+//ignore_index = True 옵션 설정하기
+result2 = pd.concat([df1, df2], ignore_index=True)
+print(result2, '\n')
+
+//2개의 데이터프레임을 좌우 열 방향으로 이어 붙이듯 연결하기
+result3 = pd.concat([df1, df2], axis=1)
+print(result3, '\n')
+
+//join='inner' 옵션 적용하기(교집합)
+result3_in = pd.concat([df1, df2], axis=1, join='inner')
+print(result3_in, '\n')
+
+//시리즈 만들기
+sr1 = pd.Series(['e0', 'e1', 'e2', 'e3'], name='e')
+sr2 = pd.Series(['f0', 'f1', 'f2'], name='f', index=[3,4,5])
+sr3 = pd.Series(['g0', 'g1', 'g2', 'g3'], name='g')
+
+//df1와 sr1을 좌우 열 방향으로 연결하기
+result4 = pd.concat([df1, sr1], axis=1)
+print(result4, '\n')
+
+//df2과 sr2를 좌우 열방향으로 연결하기
+result5 = pd.concat([df2, sr2], axis=1, sort=True)
+print(result5, '\n')
+
+//sr1과 sr3를 좌우 열방향으로 연결하기
+result6 = pd.concat([sr1, sr3], axis=1)
+print(result6, '\n')
+
+result7 = pd.concat([sr1, sr3], axis=0)
+print(result7, '\n')
+- join = inner 옵션(교집합)
