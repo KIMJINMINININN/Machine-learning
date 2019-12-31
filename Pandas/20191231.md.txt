@@ -9,3 +9,6 @@
 - cbow
 - skip-gram
 
+# 데이터 분석 프로젝트 관리 방법론
+- wbs, slack, trello(협업)
+- github, Bitbucket(버전관리)
