@@ -1,0 +1,38 @@
+diff a/Pandas/20191227.md.txt b/Pandas/20191227.md.txt	(rejected hunks)
+@@ -0,0 +1,35 @@
++# **2019.12.27 Pandas Class
++***
++
++##�׷쿬��
++
++- class ���� �������� ����
++grouped = df.groupby(['class'])
++print(grouped)
++print('\n')
++
++- �� �׷��� �ִ밪�� �ּҰ��� ���̸� ����Ͽ� �׷캰�� ����
++agg_minmax = grouped.agg(min_max)#grouped�� ��� ������ min_max�� x �Ķ���ͷ� �Ѿ�Եȴ�
++print(agg_minmax.head())
++
++- class sex ���� �������� ����
++grouped = df.groupby(['class', 'sex'])
++gdf = grouped.mean()
++                     age        fare  survived
++class  sex                                    
++First  female  34.611765  106.125798  0.968085
++       male    41.281386   67.226127  0.368852
++Second female  28.722973   21.970121  0.921053
++       male    30.740707   19.741782  0.157407
++Third  female  21.750000   16.118810  0.500000
++       male    26.507589   12.661633  0.135447
++<class 'pandas.core.frame.DataFrame'>
++---
++# ������ Ű����
++### apply, applymap 
++### agg, transform, filter,
++### describe(������), xs
++### numeric, missingno
++
++missingno
++plotnine
+\ No newline at end of file

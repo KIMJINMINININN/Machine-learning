@@ -1,0 +1,35 @@
+# **2019.12.27 Pandas Class
+***
+
+##그룹연산
+
+- class 열을 기준으로 분할
+grouped = df.groupby(['class'])
+print(grouped)
+print('\n')
+
+- 각 그룹의 최대값과 최소값의 차이를 계산하여 그룹별로 집계
+agg_minmax = grouped.agg(min_max)#grouped된 덩어리 단위로 min_max에 x 파라미터로 넘어가게된다
+print(agg_minmax.head())
+
+- class sex 열을 기준으로 분할
+grouped = df.groupby(['class', 'sex'])
+gdf = grouped.mean()
+                     age        fare  survived
+class  sex                                    
+First  female  34.611765  106.125798  0.968085
+       male    41.281386   67.226127  0.368852
+Second female  28.722973   21.970121  0.921053
+       male    30.740707   19.741782  0.157407
+Third  female  21.750000   16.118810  0.500000
+       male    26.507589   12.661633  0.135447
+<class 'pandas.core.frame.DataFrame'>
+---
+# 오늘의 키워드
+### apply, applymap 
+### agg, transform, filter,
+### describe(기술통계), xs
+### numeric, missingno
+
+missingno
+plotnine

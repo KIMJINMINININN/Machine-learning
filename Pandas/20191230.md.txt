@@ -1,0 +1,8 @@
+# **2019.12.30 Pandas Class
+***
+
+## soynlp
+한국어 자연어 처리를 위한 라이브러리
+https://github.com/lovit/soynlp
+
+## wordcloud
