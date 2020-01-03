@@ -278,7 +278,7 @@ def craw(loca,driver):
         #라벨 dictionary에 crawling한 내용들을 저장
         label_1 = {'title':'','number':'','addressroad':'','addressgi':'','opentime':'','pageaddress':'','info':'','ellipsis_area':'','image':''}
         label_1['title']         = title
-        label_1['number']        =number 
+        label_1['number']        = number 
         label_1['addressroad']   = addressroad
         label_1['addressgi']     = addressgi
         label_1['opentime']      = opentime

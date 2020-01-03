@@ -104,5 +104,3 @@ docker commit crawling vmelove/crawling
 ㅇsoup.selector -> beautifulsoup4에서 사용하는 css.selector
 
 ㅇ크롬의 #copy selector를 사용하면 그부분의 selector를 사용할수있다
-
-

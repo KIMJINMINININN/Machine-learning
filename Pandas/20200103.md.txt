@@ -1,0 +1,20 @@
+# **2020.01.03 Machine learning Class
+***
+## AI, Machine learning, Deep learning
+- 머신러닝과 딥러닝의 차이점
+머신러닝은 어떠한 패턴을 잡아주어서 그것을 훈련시키는것인데
+딥러닝은 이상치누락치를 잡아주지않아도 자동으로 바뀌게된다
+
+- 대용량 데이터 처리(Data Engineering), 데이터 분석(Data Analysis)
+
+- 데이터 마이닝(data mining)은 
+대규모로 저장된 데이터 안에서 체계적이고 자동적으로 통계적 규칙이나 패턴을 찾아 내는 것이다.
+
+- 머신러닝 알고리즘의 유형
+선형 회귀(Linear regression)와 로지스틱 회귀(Logistic regression)
+Regression - 회귀, 추세선을 긋는것
+
+KEY
+- 모델  : 예측을 수학 수학공식, 함수, 1차방정식, 확률분포
+- 알고리즘 : 어떠한 문제를 풀기위한 과정 Model을 생성하기위한 훈련과정
+
