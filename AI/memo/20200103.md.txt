@@ -83,6 +83,7 @@ r2_score_error(y_true, y_pred)
 데이터세트에서 무작위로 중복을 허용하여서 가져온다
 
 ## 감정분석(9.Sentiment)
-
+머신러닝 알고리즘을 이용하여 문맥의 편향성을 바탕으로 어떤 
+- 앙상블 알고리즘
 // https://datascienceschool.net/
 -> 참고할만한 사이트
